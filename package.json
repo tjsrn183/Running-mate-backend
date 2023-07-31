@@ -14,6 +14,7 @@
     "@types/cookie-parser": "^1.4.3",
     "express": "^4.18.2",
     "mysql2": "^3.5.2",
+    "passport": "^0.6.0",
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.1",
     "typescript": "^5.1.6"
