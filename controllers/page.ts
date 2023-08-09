@@ -8,5 +8,6 @@ export const renderJoin = (req: Request, res: Response) => {
   res.render("join", { title: "회원가입- 러닝메이트" });
 };
 export const renderMain = (req: Request, res: Response) => {
-  res.render("main", { title: "Main- 러닝메이트" });
+  const runItem: Array<string> = [];
+  res.render("main", { title: "Main- 러닝메이트", runItem });
 };
