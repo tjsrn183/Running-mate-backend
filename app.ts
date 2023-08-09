@@ -10,7 +10,7 @@ dotenv.config();
 
 const app = express();
 app.use((req, res, next) => {
-  res.send("제발작동해라1");
+  res.send("제발작동해라2");
   next();
 });
 app.set("port", process.env.PORT || 8001);

@@ -11,7 +11,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((req, res, next) => {
-    res.send("제발작동해라1");
+    res.send("제발작동해라2");
     next();
 });
 app.set("port", process.env.PORT || 8001);
