@@ -5,10 +5,15 @@ import path from "path";
 import session from "express-session";
 import dotenv from "dotenv";
 //import pageRouter from "./routes/page";
-import { Request, Response, NextFunction } from "express";
+import { ReqResNext } from ".";
+import { sequelize } from "./models";
+import passportConfig from "passport";
+import passport from "passport";
+
 dotenv.config();
 
 const app = express();
+passportConfig();
 app.use((req, res, next) => {
   res.send("제발작동해라2");
   next();
@@ -30,9 +35,18 @@ app.use(
     },
   })
 );
-
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("데이터베이스 연결성공");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+app.use(passport.initialize());
+app.use(passport.session());
 //app.use("/", pageRouter);
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use(({ req, res, next }: ReqResNext) => {
   try {
     const error = new Error(`${req.method} ${req.url}라우터가 없습니다.`);
     res.json({ status: "404" });
@@ -40,7 +54,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 });
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use(({ err, req, res, next }: ReqResNext) => {
   res.locals.message = err.message;
   res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
   res.status(err.status || 500);

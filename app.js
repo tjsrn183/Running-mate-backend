@@ -8,6 +8,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const express_session_1 = __importDefault(require("express-session"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const models_1 = require("./models");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((req, res, next) => {
@@ -29,6 +30,14 @@ app.use((0, express_session_1.default)({
         secure: false,
     },
 }));
+models_1.sequelize
+    .sync({ force: false })
+    .then(() => {
+    console.log("데이터베이스 연결성공");
+})
+    .catch((err) => {
+    console.error(err);
+});
 //app.use("/", pageRouter);
 app.use((req, res, next) => {
     try {

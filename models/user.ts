@@ -1,9 +1,30 @@
-import Sequelize from "sequelize";
+import Sequelize, {
+  Model,
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "sequelize";
+import Post from "./post";
 
-class User extends Sequelize.Model {
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  declare id: CreationOptional<number>;
+  declare email: string;
+  declare nick: string;
+  declare password: CreationOptional<string>;
+  declare provider: CreationOptional<string>;
+  declare snsId: CreationOptional<string>;
+  declare createAt: CreationOptional<Date>;
+  declare updateAt: CreationOptional<Date>;
+  declare deleteAt: CreationOptional<Date>;
+
   static initiate(sequelize: Sequelize.Sequelize) {
     User.init(
       {
+        id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
         email: {
           type: Sequelize.STRING(40),
           allowNull: true,
@@ -26,7 +47,11 @@ class User extends Sequelize.Model {
           type: Sequelize.STRING(30),
           allowNull: true,
         },
+        createAt: Sequelize.DATE,
+        updateAt: Sequelize.DATE,
+        deleteAt: Sequelize.DATE,
       },
+
       {
         sequelize,
         timestamps: true,
@@ -39,7 +64,9 @@ class User extends Sequelize.Model {
       }
     );
   }
-  static associate(db: any) {
-    db.User.hasMany(db.Post);
+  static associate() {
+    User.hasMany(Post);
   }
 }
+
+export default User;

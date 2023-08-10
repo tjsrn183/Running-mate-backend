@@ -1,14 +1,34 @@
-import Sequelize from "sequelize";
+import Sequelize, {
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
+import User from "./user";
+import exp from "constants";
 
-class Post extends Sequelize.Model {
+class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
+  declare id: CreationOptional<number>;
+  declare content: string;
+  declare createAt: CreationOptional<Date>;
+  declare updateAt: CreationOptional<Date>;
+
   static initiate(sequelize: Sequelize.Sequelize) {
     Post.init(
       {
+        id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
         content: {
           type: Sequelize.TEXT,
           allowNull: false,
         },
+        createAt: Sequelize.DATE,
+        updateAt: Sequelize.DATE,
       },
+
       {
         sequelize,
         timestamps: true,
@@ -21,7 +41,8 @@ class Post extends Sequelize.Model {
       }
     );
   }
-  static associate(db: any) {
-    db.Post.belongsTo(db.User);
+  static associate() {
+    Post.belongsTo(User);
   }
 }
+export default Post;
