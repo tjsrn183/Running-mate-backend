@@ -2,7 +2,7 @@ import express from "express";
 import passport from "passport";
 
 import { isLoggedIn, isNotLoggedIn } from "../middlewares";
-import { join, login, logout } from "../controllers/user";
+import { join, login, logout } from "../controllers/auth";
 
 const router = express.Router();
 

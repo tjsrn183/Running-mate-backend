@@ -5,7 +5,6 @@ import Sequelize, {
   Model,
 } from "sequelize";
 import User from "./user";
-import exp from "constants";
 
 class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
   declare id: CreationOptional<number>;

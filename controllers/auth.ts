@@ -2,7 +2,11 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import User from "../models/user";
 import { ReqResNext } from "..";
-import { RequestHandler } from "express";
+
+type AuthError = Error | null;
+type UserInfo = {
+  message: string;
+};
 
 const join = async ({ req, res, next }: ReqResNext) => {
   const { email, nick, password } = req.body;
@@ -25,22 +29,25 @@ const join = async ({ req, res, next }: ReqResNext) => {
 };
 
 const login = async ({ req, res, next }: ReqResNext) => {
-  passport.authenticate("local", (authError: string, user: Object, info) => {
-    if (authError) {
-      console.error(authError);
-      return next?.(authError);
-    }
-    if (!user) {
-      return res.redirect(`/?loginError=${info.message}`);
-    }
-    return req.login(user, (loginError) => {
-      if (loginError) {
-        console.error(loginError);
-        return next?.(loginError);
+  passport.authenticate(
+    "local",
+    (authError: AuthError, user: User | false, info: UserInfo) => {
+      if (authError) {
+        console.error(authError);
+        return next?.(authError);
       }
-      return res.redirect("/");
-    });
-  })(req, res, next);
+      if (!user) {
+        return res.redirect(`/?loginError=${info.message}`);
+      }
+      return req.login(user, (loginError) => {
+        if (loginError) {
+          console.error(loginError);
+          return next?.(loginError);
+        }
+        return res.redirect("/");
+      });
+    }
+  )(req, res, next);
 };
 
 const logout = async ({ req, res, next }: ReqResNext) => {

@@ -1,6 +1,6 @@
 import passport from "passport";
-import local from "localStrategy";
-import kakao from "kakaoStrategy";
+import local from "./localStrategy";
+import kakao from "./kakaoStrategy";
 import User from "../models/user";
 
 export default () => {

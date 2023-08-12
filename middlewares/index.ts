@@ -1,13 +1,13 @@
-import { ReqResNext } from "..";
+import { RequestHandler } from "express";
 
-const isLoggedIn = ({ req, res, next }: ReqResNext) => {
+const isLoggedIn: RequestHandler = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
     res.status(403).send("로그인 하세요");
   }
 };
-const isNotLoggedIn = ({ req, res, next }: ReqResNext) => {
+const isNotLoggedIn: RequestHandler = (req, res, next) => {
   if (!req.isAuthenticated()) {
     next();
   } else {
