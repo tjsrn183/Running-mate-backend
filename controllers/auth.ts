@@ -1,14 +1,14 @@
 import bcrypt from "bcrypt";
 import passport from "passport";
 import User from "../models/user";
-import { ReqResNext } from "..";
+import { RequestHandler } from "express";
 
 type AuthError = Error | null;
 type UserInfo = {
   message: string;
 };
 
-const join = async ({ req, res, next }: ReqResNext) => {
+const join: RequestHandler = async (req, res, next) => {
   const { email, nick, password } = req.body;
   try {
     const exUser = await User.findOne({ where: { email } });
@@ -28,7 +28,7 @@ const join = async ({ req, res, next }: ReqResNext) => {
   }
 };
 
-const login = async ({ req, res, next }: ReqResNext) => {
+const login: RequestHandler = async (req, res, next) => {
   passport.authenticate(
     "local",
     (authError: AuthError, user: User | false, info: UserInfo) => {
@@ -50,8 +50,8 @@ const login = async ({ req, res, next }: ReqResNext) => {
   )(req, res, next);
 };
 
-const logout = async ({ req, res, next }: ReqResNext) => {
-  req.logout(({ req, res }: ReqResNext) => {
+const logout: RequestHandler = async (req, res, next) => {
+  req.logout(() => {
     res.send("logout");
   });
 };
