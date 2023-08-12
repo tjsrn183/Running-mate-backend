@@ -1,11 +1,9 @@
 import express, { ErrorRequestHandler } from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import path from "path";
 import session from "express-session";
 import dotenv from "dotenv";
-//import pageRouter from "./routes/page";
-import { RequestHandler } from "express";
+import pageRouter from "./routes/page";
 import { sequelize } from "./models";
 import passportConfig from "./passport";
 import passport from "passport";
@@ -27,7 +25,7 @@ app.use((req, res, next) => {
   res.send("제발작동해라2");
   next();
 });
-app.set("port", process.env.PORT || 8001);
+app.set("port", process.env.PORT || 8003);
 app.use(morgan("dev"));
 //app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
@@ -54,7 +52,7 @@ sequelize
   });
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use("/", pageRouter);
+app.use("/", pageRouter);
 app.use("/auth", authRouter);
 app.use((req, res, next) => {
   try {
