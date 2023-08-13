@@ -8,6 +8,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const express_session_1 = __importDefault(require("express-session"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const page_1 = __importDefault(require("./routes/page"));
 const models_1 = require("./models");
 const passport_1 = __importDefault(require("./passport"));
 const passport_2 = __importDefault(require("passport"));
@@ -26,7 +27,7 @@ app.use((req, res, next) => {
     res.send("제발작동해라2");
     next();
 });
-app.set("port", process.env.PORT || 8001);
+app.set("port", process.env.PORT || 8003);
 app.use((0, morgan_1.default)("dev"));
 //app.use(express.static(path.join(__dirname, "public")));
 app.use(express_1.default.json());
@@ -51,7 +52,7 @@ models_1.sequelize
 });
 app.use(passport_2.default.initialize());
 app.use(passport_2.default.session());
-//app.use("/", pageRouter);
+app.use("/", page_1.default);
 app.use("/auth", auth_1.default);
 app.use((req, res, next) => {
     try {

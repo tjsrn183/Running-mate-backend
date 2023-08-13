@@ -1,10 +1,16 @@
 import express from "express";
 import passport from "passport";
-
+import cors from "cors";
 import { isLoggedIn, isNotLoggedIn } from "../middlewares";
 import { join, login, logout } from "../controllers/auth";
 
 const router = express.Router();
+
+router.use(
+  cors({
+    origin: ["http://localhost:3000"],
+  })
+);
 
 router.post("/join", isNotLoggedIn, join);
 
