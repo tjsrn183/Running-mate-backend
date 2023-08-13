@@ -9,9 +9,9 @@ const router = express.Router();
 router.use(
   cors({
     origin: ["http://localhost:3000"],
+    credentials: true,
   })
 );
-
 router.post("/join", isNotLoggedIn, join);
 
 router.post("/login", isNotLoggedIn, login);
@@ -26,7 +26,7 @@ router.get(
     failureRedirect: "/?loginError=카카오 로그인 실패",
   }),
   (req, res) => {
-    res.redirect("/");
+    res.redirect("http://localhost:3000");
   }
 );
 

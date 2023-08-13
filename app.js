@@ -18,15 +18,10 @@ const errorHandler = (err, req, res, next) => {
     res.locals.message = err.message;
     res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
     res.status(err.status || 500);
-    res.render("error");
 };
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, passport_1.default)();
-app.use((req, res, next) => {
-    res.send("제발작동해라2");
-    next();
-});
 app.set("port", process.env.PORT || 8003);
 app.use((0, morgan_1.default)("dev"));
 //app.use(express.static(path.join(__dirname, "public")));
@@ -52,8 +47,8 @@ models_1.sequelize
 });
 app.use(passport_2.default.initialize());
 app.use(passport_2.default.session());
-app.use("/", page_1.default);
 app.use("/auth", auth_1.default);
+app.use("/", page_1.default);
 app.use((req, res, next) => {
     try {
         const error = new Error(`${req.method} ${req.url}라우터가 없습니다.`);

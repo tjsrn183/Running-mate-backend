@@ -14,17 +14,12 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
   res.status(err.status || 500);
-  res.render("error");
 };
 
 dotenv.config();
 
 const app = express();
 passportConfig();
-app.use((req, res, next) => {
-  res.send("제발작동해라2");
-  next();
-});
 app.set("port", process.env.PORT || 8003);
 app.use(morgan("dev"));
 //app.use(express.static(path.join(__dirname, "public")));
@@ -52,6 +47,7 @@ sequelize
   });
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use("/auth", authRouter);
 app.use("/", pageRouter);
 
