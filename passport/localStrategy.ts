@@ -7,13 +7,13 @@ export default () => {
   passport.use(
     new LocalStrategy(
       {
-        usernameField: "email",
+        usernameField: "user_id",
         passwordField: "password",
         passReqToCallback: false,
       },
-      async (email, password, done) => {
+      async (user_id, password, done) => {
         try {
-          const exUser = await User.findOne({ where: { email } });
+          const exUser = await User.findOne({ where: { user_id } });
           if (exUser) {
             const result = await bcrypt.compare(password, exUser.password);
             if (result) {

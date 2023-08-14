@@ -17,19 +17,23 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const passport_1 = __importDefault(require("passport"));
 const user_1 = __importDefault(require("../models/user"));
 const join = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, nick, password } = req.body;
+    const { id, password, name, phoneNumber, nickname, birthday, sex } = req.body;
     try {
-        const exUser = yield user_1.default.findOne({ where: { email } });
+        const exUser = yield user_1.default.findOne({ where: { user_id: id } });
         if (exUser) {
             return res.redirect("/join?error=exist");
         }
         const hash = yield bcrypt_1.default.hash(password, 12);
         yield user_1.default.create({
-            email,
-            nick,
+            user_id: id,
+            nick: nickname,
             password: hash,
+            name: name,
+            phoneNumber: phoneNumber,
+            birthday: birthday,
+            sex: sex,
         });
-        return res.redirect("/");
+        return res.redirect("http://localhost:3000/login");
     }
     catch (error) {
         console.error(error);
@@ -51,7 +55,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
                 console.error(loginError);
                 return next === null || next === void 0 ? void 0 : next(loginError);
             }
-            return res.redirect("/");
+            return res.redirect("http://localhost:3000");
         });
     })(req, res, next);
 });

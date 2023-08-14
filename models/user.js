@@ -31,19 +31,31 @@ const post_1 = __importDefault(require("./post"));
 class User extends sequelize_1.Model {
     static initiate(sequelize) {
         User.init({
+            email: {
+                type: sequelize_1.default.STRING(40),
+                allowNull: true,
+            },
             id: {
                 type: sequelize_1.default.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
             },
-            email: {
+            user_id: {
                 type: sequelize_1.default.STRING(40),
                 allowNull: true,
                 unique: true,
             },
+            name: {
+                type: sequelize_1.default.STRING(30),
+                allowNull: true,
+            },
+            birthday: {
+                type: sequelize_1.default.STRING(10),
+                allowNull: true,
+            },
             nick: {
                 type: sequelize_1.default.STRING(15),
-                allowNull: false,
+                allowNull: true,
             },
             password: {
                 type: sequelize_1.default.STRING(100),
@@ -53,6 +65,14 @@ class User extends sequelize_1.Model {
                 type: sequelize_1.default.ENUM("local", "kakao"),
                 allowNull: false,
                 defaultValue: "local",
+            },
+            sex: {
+                type: sequelize_1.default.ENUM("male", "female"),
+                allowNull: false,
+            },
+            phoneNumber: {
+                type: sequelize_1.default.STRING(20),
+                allowNull: false,
             },
             snsId: {
                 type: sequelize_1.default.STRING(30),

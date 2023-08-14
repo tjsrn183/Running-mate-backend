@@ -8,6 +8,10 @@ const passport_1 = __importDefault(require("passport"));
 const middlewares_1 = require("../middlewares");
 const auth_1 = require("../controllers/auth");
 const router = express_1.default.Router();
+router.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+});
 router.post("/join", middlewares_1.isNotLoggedIn, auth_1.join);
 router.post("/login", middlewares_1.isNotLoggedIn, auth_1.login);
 router.post("/logout", middlewares_1.isLoggedIn, auth_1.logout);

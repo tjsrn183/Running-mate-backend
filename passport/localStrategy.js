@@ -18,12 +18,12 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const user_1 = __importDefault(require("../models/user"));
 exports.default = () => {
     passport_1.default.use(new passport_local_1.Strategy({
-        usernameField: "email",
+        usernameField: "user_id",
         passwordField: "password",
         passReqToCallback: false,
-    }, (email, password, done) => __awaiter(void 0, void 0, void 0, function* () {
+    }, (user_id, password, done) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const exUser = yield user_1.default.findOne({ where: { email } });
+            const exUser = yield user_1.default.findOne({ where: { user_id } });
             if (exUser) {
                 const result = yield bcrypt_1.default.compare(password, exUser.password);
                 if (result) {

@@ -8,8 +8,13 @@ import Post from "./post";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
-  declare email: string;
+  declare user_id: CreationOptional<number>;
   declare nick: string;
+  declare sex: CreationOptional<String>;
+  declare phoneNumber: CreationOptional<string>;
+  declare name: CreationOptional<string>;
+  declare birthday: CreationOptional<string>;
+  declare email: CreationOptional<string>;
   declare password: CreationOptional<string>;
   declare provider: CreationOptional<string>;
   declare snsId: CreationOptional<string>;
@@ -20,19 +25,31 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   static initiate(sequelize: Sequelize.Sequelize) {
     User.init(
       {
+        email: {
+          type: Sequelize.STRING(40),
+          allowNull: true,
+        },
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
-        email: {
+        user_id: {
           type: Sequelize.STRING(40),
           allowNull: true,
           unique: true,
         },
+        name: {
+          type: Sequelize.STRING(30),
+          allowNull: true,
+        },
+        birthday: {
+          type: Sequelize.STRING(10),
+          allowNull: true,
+        },
         nick: {
           type: Sequelize.STRING(15),
-          allowNull: false,
+          allowNull: true,
         },
         password: {
           type: Sequelize.STRING(100),
@@ -42,6 +59,14 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
           type: Sequelize.ENUM("local", "kakao"),
           allowNull: false,
           defaultValue: "local",
+        },
+        sex: {
+          type: Sequelize.ENUM("male", "female"),
+          allowNull: false,
+        },
+        phoneNumber: {
+          type: Sequelize.STRING(20),
+          allowNull: false,
         },
         snsId: {
           type: Sequelize.STRING(30),

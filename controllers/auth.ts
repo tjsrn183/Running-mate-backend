@@ -9,19 +9,26 @@ type UserInfo = {
 };
 
 const join: RequestHandler = async (req, res, next) => {
-  const { email, nick, password } = req.body;
+  const { id, password, name, phoneNumber, nickname, birthday, sex } = req.body;
+
   try {
-    const exUser = await User.findOne({ where: { email } });
+    const exUser = await User.findOne({ where: { user_id: id } });
     if (exUser) {
       return res.redirect("/join?error=exist");
     }
+
     const hash = await bcrypt.hash(password, 12);
     await User.create({
-      email,
-      nick,
+      user_id: id,
+      nick: nickname,
       password: hash,
+      name: name,
+      phoneNumber: phoneNumber,
+      birthday: birthday,
+      sex: sex,
     });
-    return res.redirect("/");
+
+    return res.redirect("http://localhost:3000/login");
   } catch (error) {
     console.error(error);
     return next?.(error);
@@ -44,7 +51,7 @@ const login: RequestHandler = async (req, res, next) => {
           console.error(loginError);
           return next?.(loginError);
         }
-        return res.redirect("/");
+        return res.redirect("http://localhost:3000");
       });
     }
   )(req, res, next);
