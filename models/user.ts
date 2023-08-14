@@ -62,11 +62,11 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
         },
         sex: {
           type: Sequelize.ENUM("male", "female"),
-          allowNull: false,
+          allowNull: true,
         },
         phoneNumber: {
           type: Sequelize.STRING(20),
-          allowNull: false,
+          allowNull: true,
         },
         snsId: {
           type: Sequelize.STRING(30),

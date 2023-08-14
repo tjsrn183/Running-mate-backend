@@ -40,7 +40,7 @@ app.use((0, express_session_1.default)({
 }));
 app.use((0, cors_1.default)());
 models_1.sequelize
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
     console.log("데이터베이스 연결성공");
 })

@@ -68,11 +68,11 @@ class User extends sequelize_1.Model {
             },
             sex: {
                 type: sequelize_1.default.ENUM("male", "female"),
-                allowNull: false,
+                allowNull: true,
             },
             phoneNumber: {
                 type: sequelize_1.default.STRING(20),
-                allowNull: false,
+                allowNull: true,
             },
             snsId: {
                 type: sequelize_1.default.STRING(30),

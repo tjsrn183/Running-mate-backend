@@ -20,6 +20,7 @@ exports.default = () => {
         clientID: process.env.KAKAO_ID,
         callbackURL: "/auth/kakao/callback",
     }, (accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b;
         console.log("kakao profile", profile);
         try {
             const exUser = yield user_1.default.findOne({
@@ -30,6 +31,7 @@ exports.default = () => {
             }
             else {
                 const newUser = yield user_1.default.create({
+                    email: (_b = (_a = profile._json) === null || _a === void 0 ? void 0 : _a.kakao_account) === null || _b === void 0 ? void 0 : _b.email,
                     nick: profile.displayName,
                     snsId: profile.id,
                     provider: "kakao",
