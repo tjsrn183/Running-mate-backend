@@ -8,6 +8,7 @@ import { sequelize } from "./models";
 import passportConfig from "./passport";
 import passport from "passport";
 import authRouter from "./routes/auth";
+import cors from "cors";
 
 //에러핸들러
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
@@ -37,6 +38,7 @@ app.use(
     },
   })
 );
+app.use(cors());
 sequelize
   .sync({ force: false })
   .then(() => {

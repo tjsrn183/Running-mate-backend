@@ -6,12 +6,6 @@ import { join, login, logout } from "../controllers/auth";
 
 const router = express.Router();
 
-router.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    credentials: true,
-  })
-);
 router.post("/join", isNotLoggedIn, join);
 
 router.post("/login", isNotLoggedIn, login);

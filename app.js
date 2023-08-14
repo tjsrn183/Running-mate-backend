@@ -13,6 +13,7 @@ const models_1 = require("./models");
 const passport_1 = __importDefault(require("./passport"));
 const passport_2 = __importDefault(require("passport"));
 const auth_1 = __importDefault(require("./routes/auth"));
+const cors_1 = __importDefault(require("cors"));
 //에러핸들러
 const errorHandler = (err, req, res, next) => {
     res.locals.message = err.message;
@@ -37,6 +38,7 @@ app.use((0, express_session_1.default)({
         secure: false,
     },
 }));
+app.use((0, cors_1.default)());
 models_1.sequelize
     .sync({ force: false })
     .then(() => {
