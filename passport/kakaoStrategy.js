@@ -22,6 +22,8 @@ exports.default = () => {
     }, (accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         console.log("kakao profile", profile);
+        console.log("kakao accessToken", accessToken);
+        console.log("kakao refreshToken", refreshToken);
         try {
             const exUser = yield user_1.default.findOne({
                 where: { snsId: profile.id, provider: "kakao" },

@@ -26,6 +26,7 @@ const join: RequestHandler = async (req, res, next) => {
       phoneNumber: phoneNumber,
       birthday: birthday,
       sex: sex,
+      provider: "local",
     });
 
     return res.redirect("http://localhost:3000/login");

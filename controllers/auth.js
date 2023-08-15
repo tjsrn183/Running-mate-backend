@@ -32,6 +32,7 @@ const join = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
             phoneNumber: phoneNumber,
             birthday: birthday,
             sex: sex,
+            provider: "local",
         });
         return res.redirect("http://localhost:3000/login");
     }

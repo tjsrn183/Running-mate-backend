@@ -55,7 +55,7 @@ class User extends sequelize_1.Model {
             },
             nick: {
                 type: sequelize_1.default.STRING(15),
-                allowNull: true,
+                allowNull: false,
             },
             password: {
                 type: sequelize_1.default.STRING(100),
@@ -64,7 +64,6 @@ class User extends sequelize_1.Model {
             provider: {
                 type: sequelize_1.default.ENUM("local", "kakao"),
                 allowNull: false,
-                defaultValue: "local",
             },
             sex: {
                 type: sequelize_1.default.ENUM("male", "female"),

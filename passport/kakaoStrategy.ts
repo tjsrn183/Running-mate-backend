@@ -11,6 +11,8 @@ export default () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         console.log("kakao profile", profile);
+        console.log("kakao accessToken", accessToken);
+        console.log("kakao refreshToken", refreshToken);
         try {
           const exUser = await User.findOne({
             where: { snsId: profile.id, provider: "kakao" },

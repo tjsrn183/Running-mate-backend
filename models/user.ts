@@ -16,7 +16,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare birthday: CreationOptional<string>;
   declare email: CreationOptional<string>;
   declare password: CreationOptional<string>;
-  declare provider: CreationOptional<string>;
+  declare provider: string;
   declare snsId: CreationOptional<string>;
   declare createAt: CreationOptional<Date>;
   declare updateAt: CreationOptional<Date>;
@@ -49,7 +49,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
         },
         nick: {
           type: Sequelize.STRING(15),
-          allowNull: true,
+          allowNull: false,
         },
         password: {
           type: Sequelize.STRING(100),
@@ -58,7 +58,6 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
         provider: {
           type: Sequelize.ENUM("local", "kakao"),
           allowNull: false,
-          defaultValue: "local",
         },
         sex: {
           type: Sequelize.ENUM("male", "female"),
