@@ -21,4 +21,12 @@ router.get("/kakao/callback", passport_1.default.authenticate("kakao", {
 }), (req, res) => {
     res.redirect("http://localhost:3000");
 });
+router.get("/userinfo", (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({ user: req.user });
+    }
+    else {
+        res.json({ message: "사용자가 로그인되어 있지 않습니다." });
+    }
+});
 exports.default = router;

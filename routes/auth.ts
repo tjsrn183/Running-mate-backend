@@ -27,5 +27,11 @@ router.get(
     res.redirect("http://localhost:3000");
   }
 );
-
+router.get("/userinfo", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ user: req.user });
+  } else {
+    res.json({ message: "사용자가 로그인되어 있지 않습니다." });
+  }
+});
 export default router;
