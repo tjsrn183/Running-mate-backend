@@ -29,11 +29,14 @@ router.get(
   }
 );
 router.get("/userinfo", (req, res) => {
-  if (req.isAuthenticated()) {
+  if (req.user) {
     res.json({ user: req.user });
     console.log("리퀘스트정보", req.user);
   } else {
-    res.json({ message: "사용자가 로그인되어 있지 않습니다.2트" });
+    res.json({
+      message: "사용자가 로그인되어 있지 않습니다.3트",
+      user: req.user,
+    });
   }
 });
 export default router;
