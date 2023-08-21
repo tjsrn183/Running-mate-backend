@@ -19,14 +19,16 @@ router.get("/kakao", passport_1.default.authenticate("kakao"));
 router.get("/kakao/callback", passport_1.default.authenticate("kakao", {
     failureRedirect: "/?loginError=카카오 로그인 실패",
 }), (req, res) => {
+    console.log("req정보다", req.user);
     res.redirect("http://localhost:3000");
 });
 router.get("/userinfo", (req, res) => {
     if (req.isAuthenticated()) {
         res.json({ user: req.user });
+        console.log("리퀘스트정보", req.user);
     }
     else {
-        res.json({ message: "사용자가 로그인되어 있지 않습니다." });
+        res.json({ message: "사용자가 로그인되어 있지 않습니다.2트" });
     }
 });
 exports.default = router;
