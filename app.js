@@ -36,7 +36,6 @@ app.use((0, express_session_1.default)({
     cookie: {
         httpOnly: true,
         secure: false,
-        maxAge: 60 * 60 * 1000,
     },
 }));
 app.use((0, cors_1.default)({ origin: true, credentials: true }));

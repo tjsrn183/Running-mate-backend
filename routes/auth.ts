@@ -35,7 +35,6 @@ router.get("/userinfo", (req, res) => {
   } else {
     res.json({
       message: "사용자가 로그인되어 있지 않습니다.3트",
-      user: req.user,
     });
   }
 });
