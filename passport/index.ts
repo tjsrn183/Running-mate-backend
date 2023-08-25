@@ -5,12 +5,16 @@ import User from "../models/user";
 
 export default () => {
   passport.serializeUser((user: any, done) => {
-    done(null, user.id);
+    console.log("user의 타입을 알아보자", user);
+    done(null, { id: user.id, accessToken: user.accessToken });
   });
 
-  passport.deserializeUser((id: number, done) => {
-    User.findOne({ where: { id } })
-      .then((user) => done(null, user))
+  passport.deserializeUser((user: any, done) => {
+    User.findOne({ where: { id: user.id } })
+      .then((user: any) => {
+        const tokenUser = { user: user, accessToken: user.accessToken };
+        done(null, tokenUser);
+      })
       .catch((err) => done(err));
   });
 

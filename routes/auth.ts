@@ -1,11 +1,14 @@
 import express from "express";
 import passport from "passport";
-
+import axios from "axios";
 import { isLoggedIn, isNotLoggedIn } from "../middlewares";
 import { join, login, logout } from "../controllers/auth";
 
 const router = express.Router();
 
+router.use((req, res, next) => {
+  res.locals.user = req.user;
+});
 router.use((req, res, next) => {
   res.locals.user = req.user;
   next();
@@ -28,6 +31,27 @@ router.get(
     res.redirect("http://localhost:3000");
   }
 );
+
+router.get("/kakao/logout", async (req, res) => {
+  try {
+    const ACCESS_TOKEN = res.locals.user.accessToken;
+
+    let logout = await axios({
+      method: "post",
+      url: "https://kapi.kakao.com/v1/user/unlink",
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.json(error);
+  }
+
+  req.logout(() => {
+    res.redirect("http://localhost:3000");
+  });
+});
 router.get("/userinfo", (req, res) => {
   if (req.user) {
     res.json({ user: req.user });

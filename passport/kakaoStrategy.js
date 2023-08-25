@@ -28,8 +28,12 @@ exports.default = () => {
             const exUser = yield user_1.default.findOne({
                 where: { snsId: profile.id, provider: "kakao" },
             });
+            const tokenUser = {
+                user: exUser,
+                accessToken: accessToken,
+            };
             if (exUser) {
-                done(null, exUser);
+                done(null, tokenUser);
             }
             else {
                 const newUser = yield user_1.default.create({
@@ -38,7 +42,11 @@ exports.default = () => {
                     snsId: profile.id,
                     provider: "kakao",
                 });
-                done(null, newUser);
+                const tokenNewUser = {
+                    user: newUser,
+                    accessToken: accessToken,
+                };
+                done(null, tokenNewUser);
             }
         }
         catch (error) {

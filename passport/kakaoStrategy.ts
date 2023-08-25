@@ -17,8 +17,12 @@ export default () => {
           const exUser = await User.findOne({
             where: { snsId: profile.id, provider: "kakao" },
           });
+          const tokenUser = {
+            user: exUser,
+            accessToken: accessToken,
+          };
           if (exUser) {
-            done(null, exUser);
+            done(null, tokenUser);
           } else {
             const newUser = await User.create({
               email: profile._json?.kakao_account?.email,
@@ -26,7 +30,11 @@ export default () => {
               snsId: profile.id,
               provider: "kakao",
             });
-            done(null, newUser);
+            const tokenNewUser = {
+              user: newUser,
+              accessToken: accessToken,
+            };
+            done(null, tokenNewUser);
           }
         } catch (error) {
           console.error(error);
