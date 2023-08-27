@@ -18,13 +18,6 @@ const axios_1 = __importDefault(require("axios"));
 const middlewares_1 = require("../middlewares");
 const auth_1 = require("../controllers/auth");
 const router = express_1.default.Router();
-router.use((req, res, next) => {
-    res.locals.user = req.user;
-});
-router.use((req, res, next) => {
-    res.locals.user = req.user;
-    next();
-});
 router.post("/join", middlewares_1.isNotLoggedIn, auth_1.join);
 router.post("/login", middlewares_1.isNotLoggedIn, auth_1.login);
 router.post("/logout", middlewares_1.isLoggedIn, auth_1.logout);
@@ -38,6 +31,7 @@ router.get("/kakao/callback", passport_1.default.authenticate("kakao", {
 router.get("/kakao/logout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const ACCESS_TOKEN = res.locals.user.accessToken;
+        console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
         let logout = yield (0, axios_1.default)({
             method: "post",
             url: "https://kapi.kakao.com/v1/user/unlink",

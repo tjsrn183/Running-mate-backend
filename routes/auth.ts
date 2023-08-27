@@ -3,16 +3,10 @@ import passport from "passport";
 import axios from "axios";
 import { isLoggedIn, isNotLoggedIn } from "../middlewares";
 import { join, login, logout } from "../controllers/auth";
+import { RequestHandler } from "express";
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  res.locals.user = req.user;
-});
-router.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
 router.post("/join", isNotLoggedIn, join);
 
 router.post("/login", isNotLoggedIn, login);
@@ -32,10 +26,14 @@ router.get(
   }
 );
 
+router.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 router.get("/kakao/logout", async (req, res) => {
   try {
     const ACCESS_TOKEN = res.locals.user.accessToken;
-
+    console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
     let logout = await axios({
       method: "post",
       url: "https://kapi.kakao.com/v1/user/unlink",
