@@ -4,9 +4,8 @@ import kakao from "./kakaoStrategy";
 import User from "../models/user";
 
 export default () => {
-  passport.serializeUser((user: any, done) => {
-    console.log("user의 타입을 알아보자", user);
-    done(null, { id: user.id, accessToken: user.accessToken });
+  passport.serializeUser((data: any, done) => {
+    done(null, { id: data.user.id, accessToken: data.accessToken });
   });
 
   passport.deserializeUser((user: any, done) => {

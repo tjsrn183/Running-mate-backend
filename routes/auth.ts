@@ -31,11 +31,8 @@ router.get(
 );
 
 router.get("/userinfo", (req, res) => {
-  console.log("userinfo 조건문전", req.user);
-  console.log("res.locals.user", res.locals.user);
   if (req.user) {
     res.json({ user: req.user });
-    console.log("req.user조건문 안에서 리퀘스트정보", req.user);
   } else {
     res.json({
       message: "사용자가 로그인되어 있지 않습니다.3트",

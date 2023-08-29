@@ -8,14 +8,15 @@ const localStrategy_1 = __importDefault(require("./localStrategy"));
 const kakaoStrategy_1 = __importDefault(require("./kakaoStrategy"));
 const user_1 = __importDefault(require("../models/user"));
 exports.default = () => {
-    passport_1.default.serializeUser((user, done) => {
-        console.log("user의 타입을 알아보자", user);
-        done(null, { id: user.id, accessToken: user.accessToken });
+    passport_1.default.serializeUser((data, done) => {
+        console.log("user의 타입을 알아보자", data);
+        done(null, { id: data.user.id, accessToken: data.accessToken });
     });
     passport_1.default.deserializeUser((user, done) => {
         user_1.default.findOne({ where: { id: user.id } })
             .then((user) => {
             const tokenUser = { user: user, accessToken: user.accessToken };
+            console.log("dese에서의 tokenUser", tokenUser);
             done(null, tokenUser);
         })
             .catch((err) => done(err));
