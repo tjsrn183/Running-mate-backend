@@ -33,6 +33,11 @@ router.get(
 router.get("/userinfo", (req, res) => {
   if (req.user) {
     res.json({ user: req.user });
+    console.log(
+      "userInfo 라우터에서 res.locals.accessToken",
+      res.locals.user.accessToken
+    );
+    console.log("userInfo 라우터에서 res.locals.user", res.locals.user);
   } else {
     res.json({
       message: "사용자가 로그인되어 있지 않습니다.3트",
@@ -40,13 +45,14 @@ router.get("/userinfo", (req, res) => {
   }
 });
 
-router.get("/kakao/logout", async (req, res) => {
+router.post("/kakao/logout", async (req, res) => {
   try {
     const ACCESS_TOKEN = res.locals.user.accessToken;
+    console.log("로그아웃 라우터에서 req.user", req.user);
     console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
     let logout = await axios({
       method: "post",
-      url: "https://kapi.kakao.com/v1/user/logout",
+      url: "https://kapi.kakao.com/v1/user/unlink",
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
@@ -56,9 +62,12 @@ router.get("/kakao/logout", async (req, res) => {
     res.json(error);
   }
 
-  req.logout(() => {
-    res.redirect("http://localhost:3000");
-  });
+  req.logout(() =>
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      res.redirect("http://localhost:3000");
+    })
+  );
 });
 
 export default router;

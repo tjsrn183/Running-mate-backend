@@ -12,6 +12,7 @@ export default () => {
     User.findOne({ where: { id: user.id } })
       .then((user: any) => {
         const tokenUser = { user: user, accessToken: user.accessToken };
+        console.log("deserializeUser에서의 tokenUser", tokenUser);
         done(null, tokenUser);
       })
       .catch((err) => done(err));
