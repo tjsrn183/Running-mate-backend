@@ -45,28 +45,28 @@ router.get("/userinfo", isLoggedIn, (req, res) => {
   }
 });
 
-router.post("/kakao/logout", isLoggedIn, async (req, res) => {
+router.post("/kakao/logout", async (req, res) => {
   try {
     const ACCESS_TOKEN = res.locals.user.accessToken;
     console.log("로그아웃 라우터에서 req.user", req.user);
     console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
     let logout = await axios({
       method: "post",
-      url: "https://kapi.kakao.com/v1/user/unlink",
+      url: "https://kapi.kakao.com/v1/user/logout",
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
+    });
+    req.logout(() => {
+      req.session.destroy(() => {
+        res.clearCookie("connect.sid");
+        res.redirect("http://localhost:3000");
+      });
     });
   } catch (error) {
     console.error(error);
     res.json(error);
   }
-  res.clearCookie("connect.sid");
-  req.logout(() => {
-    req.session.destroy(() => {
-      res.redirect("http://localhost:3000");
-    });
-  });
 });
 
 export default router;
