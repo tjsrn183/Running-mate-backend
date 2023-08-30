@@ -30,7 +30,7 @@ router.get(
   }
 );
 
-router.get("/userinfo", (req, res) => {
+router.get("/userinfo", isLoggedIn, (req, res) => {
   if (req.user) {
     res.json({ user: req.user });
     console.log(
@@ -45,7 +45,7 @@ router.get("/userinfo", (req, res) => {
   }
 });
 
-router.post("/kakao/logout", async (req, res) => {
+router.post("/kakao/logout", isLoggedIn, async (req, res) => {
   try {
     const ACCESS_TOKEN = res.locals.user.accessToken;
     console.log("로그아웃 라우터에서 req.user", req.user);
@@ -61,13 +61,12 @@ router.post("/kakao/logout", async (req, res) => {
     console.error(error);
     res.json(error);
   }
-
-  req.logout(() =>
+  res.clearCookie("connect.sid");
+  req.logout(() => {
     req.session.destroy(() => {
-      res.clearCookie("connect.sid");
       res.redirect("http://localhost:3000");
-    })
-  );
+    });
+  });
 });
 
 export default router;

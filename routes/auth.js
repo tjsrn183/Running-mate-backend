@@ -32,7 +32,7 @@ router.get("/kakao/callback", passport_1.default.authenticate("kakao", {
     console.log("req정보다", req.user);
     res.redirect("http://localhost:3000");
 });
-router.get("/userinfo", (req, res) => {
+router.get("/userinfo", middlewares_1.isLoggedIn, (req, res) => {
     if (req.user) {
         res.json({ user: req.user });
         console.log("userInfo 라우터에서 res.locals.accessToken", res.locals.user.accessToken);
@@ -44,7 +44,7 @@ router.get("/userinfo", (req, res) => {
         });
     }
 });
-router.post("/kakao/logout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/kakao/logout", middlewares_1.isLoggedIn, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const ACCESS_TOKEN = res.locals.user.accessToken;
         console.log("로그아웃 라우터에서 req.user", req.user);
@@ -61,9 +61,11 @@ router.post("/kakao/logout", (req, res) => __awaiter(void 0, void 0, void 0, fun
         console.error(error);
         res.json(error);
     }
-    req.logout(() => req.session.destroy(() => {
-        res.clearCookie("connect.sid");
-        res.redirect("http://localhost:3000");
-    }));
+    res.clearCookie("connect.sid");
+    req.logout(() => {
+        req.session.destroy(() => {
+            res.redirect("http://localhost:3000");
+        });
+    });
 }));
 exports.default = router;
