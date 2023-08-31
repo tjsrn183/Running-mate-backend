@@ -49,7 +49,7 @@ router.post("/kakao/logout", (req, res) => __awaiter(void 0, void 0, void 0, fun
         const ACCESS_TOKEN = res.locals.user.accessToken;
         console.log("로그아웃 라우터에서 req.user", req.user);
         console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
-        let logout = yield (0, axios_1.default)({
+        yield (0, axios_1.default)({
             method: "post",
             url: "https://kapi.kakao.com/v1/user/logout",
             headers: {
@@ -59,7 +59,7 @@ router.post("/kakao/logout", (req, res) => __awaiter(void 0, void 0, void 0, fun
         req.logout(() => {
             req.session.destroy(() => {
                 res.clearCookie("connect.sid");
-                res.redirect("http://localhost:3000");
+                res.end();
             });
         });
     }
