@@ -7,18 +7,22 @@ import Sequelize, {
 import User from "./user";
 
 class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
-  declare id: CreationOptional<number>;
   declare content: string;
   declare createAt: CreationOptional<Date>;
   declare updateAt: CreationOptional<Date>;
+  declare title: string;
+  declare name: string;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     Post.init(
       {
-        id: {
-          type: Sequelize.INTEGER,
-          primaryKey: true,
-          autoIncrement: true,
+        name: {
+          type: Sequelize.STRING(10),
+          allowNull: false,
+        },
+        title: {
+          type: Sequelize.STRING(30),
+          allowNull: false,
         },
         content: {
           type: Sequelize.TEXT,

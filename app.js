@@ -13,6 +13,7 @@ const models_1 = require("./models");
 const passport_1 = __importDefault(require("./passport"));
 const passport_2 = __importDefault(require("passport"));
 const auth_1 = __importDefault(require("./routes/auth"));
+const post_1 = __importDefault(require("./routes/post"));
 const cors_1 = __importDefault(require("cors"));
 //에러핸들러
 const errorHandler = (err, req, res, next) => {
@@ -40,7 +41,7 @@ app.use((0, express_session_1.default)({
 }));
 app.use((0, cors_1.default)({ origin: "http://localhost:3000", credentials: true }));
 models_1.sequelize
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
     console.log("데이터베이스 연결성공");
 })
@@ -50,6 +51,7 @@ models_1.sequelize
 app.use(passport_2.default.initialize());
 app.use(passport_2.default.session());
 app.use("/auth", auth_1.default);
+app.use("/post", post_1.default);
 app.use("/", page_1.default);
 app.use((req, res, next) => {
     try {

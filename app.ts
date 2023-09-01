@@ -8,6 +8,7 @@ import { sequelize } from "./models";
 import passportConfig from "./passport";
 import passport from "passport";
 import authRouter from "./routes/auth";
+import postRouter from "./routes/post";
 import cors from "cors";
 
 //에러핸들러
@@ -40,7 +41,7 @@ app.use(
 );
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => {
     console.log("데이터베이스 연결성공");
   })
@@ -51,6 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/auth", authRouter);
+app.use("/post", postRouter);
 app.use("/", pageRouter);
 
 app.use((req, res, next) => {
