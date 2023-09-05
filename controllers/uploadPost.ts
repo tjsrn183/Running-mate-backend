@@ -7,6 +7,7 @@ export const uploadPost: RequestHandler = async (req, res, next) => {
       title: req.body.title,
       content: req.body.body,
       name: req.body.nick,
+      user_id: res.locals.user.user.dataValues.id,
     });
     console.log("백엔드 uploadPost에서 찍어보는", post);
     res.end();

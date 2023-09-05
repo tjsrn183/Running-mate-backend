@@ -89,7 +89,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     );
   }
   static associate() {
-    User.hasMany(Post);
+    User.hasMany(Post, { foreignKey: "user_id", sourceKey: "id" });
   }
 }
 
