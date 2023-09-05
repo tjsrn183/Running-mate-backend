@@ -15,11 +15,11 @@ const uploadPost = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         const post = yield models_1.Post.create({
             title: req.body.title,
-            content: req.body.content,
-            name: req.body.name,
-            userId: req.user.id,
+            content: req.body.body,
+            name: req.body.nick,
         });
-        res.redirect("http://localhost:3000");
+        console.log("백엔드 uploadPost에서 찍어보는", post);
+        res.end();
     }
     catch (error) {
         console.log(error);

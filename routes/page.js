@@ -9,5 +9,5 @@ const middlewares_1 = require("../middlewares");
 const router = express_1.default.Router();
 router.get("/profile", middlewares_1.isLoggedIn, page_1.renderProfile);
 router.get("/join", middlewares_1.isNotLoggedIn, page_1.renderJoin);
-router.get("/", page_1.renderMain);
+router.get("/", middlewares_1.isLoggedIn, page_1.renderComunityPage);
 exports.default = router;
