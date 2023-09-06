@@ -31,12 +31,21 @@ const user_1 = __importDefault(require("./user"));
 class Post extends sequelize_1.Model {
     static initiate(sequelize) {
         Post.init({
+            postId: {
+                type: sequelize_1.default.INTEGER,
+                primaryKey: true,
+                autoIncrement: true,
+            },
             name: {
                 type: sequelize_1.default.STRING(10),
                 allowNull: false,
             },
             title: {
                 type: sequelize_1.default.STRING(30),
+                allowNull: false,
+            },
+            user_id: {
+                type: sequelize_1.default.INTEGER,
                 allowNull: false,
             },
             content: {

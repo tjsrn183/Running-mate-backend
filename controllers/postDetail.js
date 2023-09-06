@@ -8,28 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadPost = void 0;
+exports.postDetail = void 0;
 const models_1 = require("../models");
-const uploadPost = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    try {
-        const post = yield models_1.Post.create({
-            title: req.body.title,
-            content: req.body.body,
-            name: req.body.nick,
-            user_id: (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.id,
-        });
-        const responseData = {
-            postId: post.dataValues.postId,
-        };
-        console.log("백엔드 uploadPost에서 찍어보는", post);
-        res.json(responseData);
-        res.end();
-    }
-    catch (error) {
-        console.log(error);
-        next(error);
-    }
+const user_1 = __importDefault(require("../models/user"));
+const postDetail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const getPostDetaile = yield models_1.Post.findOne({
+        where: { postId: id },
+        include: [{ model: user_1.default, attributes: ["nick"] }],
+    });
+    console.log("postDetail에서 찍어본 getPostDetail", getPostDetaile);
+    res.json(getPostDetaile);
+    res.end();
 });
-exports.uploadPost = uploadPost;
+exports.postDetail = postDetail;
