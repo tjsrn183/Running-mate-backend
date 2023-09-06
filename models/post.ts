@@ -3,20 +3,27 @@ import Sequelize, {
   InferAttributes,
   InferCreationAttributes,
   Model,
+  ForeignKey,
 } from "sequelize";
 import User from "./user";
 
 class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
   declare content: string;
+  declare postId: CreationOptional<number>;
   declare createAt: CreationOptional<Date>;
   declare updateAt: CreationOptional<Date>;
   declare title: string;
   declare name: string;
-  declare user_id: number;
+  declare user_id: ForeignKey<User["id"]>;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     Post.init(
       {
+        postId: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
         name: {
           type: Sequelize.STRING(10),
           allowNull: false,
@@ -51,7 +58,7 @@ class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
     );
   }
   static associate() {
-    Post.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
+    Post.belongsTo(User);
   }
 }
 export default Post;
