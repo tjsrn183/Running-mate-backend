@@ -16,13 +16,18 @@ exports.postDetail = void 0;
 const models_1 = require("../models");
 const user_1 = __importDefault(require("../models/user"));
 const postDetail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const getPostDetaile = yield models_1.Post.findOne({
-        where: { postId: id },
-        include: [{ model: user_1.default, attributes: ["nick"] }],
-    });
-    console.log("postDetail에서 찍어본 getPostDetail", getPostDetaile);
-    res.json(getPostDetaile);
-    res.end();
+    try {
+        const getPostDetaile = yield models_1.Post.findOne({
+            where: { postId: req.params.id },
+            include: [{ model: user_1.default, attributes: ["nick"] }],
+        });
+        console.log("postDetail에서 찍어본 getPostDetail", getPostDetaile);
+        res.json(getPostDetaile);
+        res.end();
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
 });
 exports.postDetail = postDetail;
