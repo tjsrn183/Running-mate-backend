@@ -16,6 +16,7 @@ export const uploadPost: RequestHandler = async (req, res, next) => {
     };
 
     console.log("백엔드 uploadPost에서 찍어보는", post);
+    console.log("백엔드에서 찍어보는 responseData", responseData);
     res.json(responseData);
     res.end();
   } catch (error) {

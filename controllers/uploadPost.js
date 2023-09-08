@@ -24,6 +24,7 @@ const uploadPost = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             postId: post.dataValues.postId,
         };
         console.log("백엔드 uploadPost에서 찍어보는", post);
+        console.log("백엔드에서 찍어보는 responseData", responseData);
         res.json(responseData);
         res.end();
     }
