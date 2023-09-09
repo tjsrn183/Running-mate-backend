@@ -16,15 +16,21 @@ exports.postList = void 0;
 const models_1 = require("../models");
 const user_1 = __importDefault(require("../models/user"));
 const postList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let postPage = req.params.page;
-    const postList = models_1.Post.findAll({
-        attributes: ["content", "createdAt", "title"],
-        order: [["createdAt", "DESC"]],
-        limit: 5,
-        include: [{ model: user_1.default, attributes: ["nick"] }],
-    });
-    console.log("postList에 postIist", postList);
-    res.json(postList);
-    res.end();
+    try {
+        let postPage = req.params.page;
+        const postListfunc = yield models_1.Post.findAll({
+            attributes: ["content", "createdAt", "title", "postId"],
+            order: [["createdAt", "DESC"]],
+            limit: 5,
+            include: { model: user_1.default, attributes: ["nick"] },
+        });
+        console.log("postList에 postListfunc", postListfunc);
+        res.json(postListfunc);
+        res.end();
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
 });
 exports.postList = postList;

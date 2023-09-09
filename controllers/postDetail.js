@@ -19,7 +19,7 @@ const postDetail = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         const getPostDetaile = yield models_1.Post.findOne({
             where: { postId: req.params.id },
-            include: [{ model: user_1.default, attributes: ["nick"] }],
+            include: { model: user_1.default, attributes: ["nick"] },
         });
         console.log("postDetail에서 찍어본 getPostDetail", getPostDetaile);
         res.json(getPostDetaile);
