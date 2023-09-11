@@ -3,12 +3,13 @@ import { isLoggedIn, isNotLoggedIn } from "../middlewares";
 import { postList } from "../controllers/postList";
 import { uploadPost } from "../controllers/uploadPost";
 import { postDetail } from "../controllers/postDetail";
+import { sanitizeHtml } from "../middlewares/sanitizeHtml";
 const router = express.Router();
 
 //router.get('/',isLoggedIn,postList)
 router.post("/", isLoggedIn, uploadPost);
 router.get("/:id", isLoggedIn, postDetail);
-router.get("/list/:page", isLoggedIn, postList);
+router.get("/list/:page", isLoggedIn, postList, sanitizeHtml);
 //router.delete('/:id',isLoggedIn,postDelete);
 
 export default router;

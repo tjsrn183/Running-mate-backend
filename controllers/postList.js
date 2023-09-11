@@ -25,8 +25,8 @@ const postList = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             include: { model: user_1.default, attributes: ["nick"] },
         });
         console.log("postList에 postListfunc", postListfunc);
-        res.json(postListfunc);
-        res.end();
+        res.locals.data = postListfunc;
+        next();
     }
     catch (error) {
         console.log(error);
