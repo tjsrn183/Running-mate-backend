@@ -4,10 +4,13 @@ interface postType {
   dataValues: {
     postId: number;
     title: string;
-    nick: string;
+    name: string;
     content: string;
     createdAt: string;
     body: string;
+  };
+  User: {
+    dataValues: any;
   };
 }
 

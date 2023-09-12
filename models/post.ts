@@ -14,7 +14,7 @@ class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
   declare updateAt: CreationOptional<Date>;
   declare title: string;
   declare name: string;
-  declare user_id: ForeignKey<User["id"]>;
+  declare user_id: number;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     Post.init(
@@ -58,7 +58,7 @@ class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
     );
   }
   static associate() {
-    Post.belongsTo(User);
+    Post.belongsTo(User, { foreignKey: "user_id" });
   }
 }
 export default Post;

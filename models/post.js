@@ -66,7 +66,7 @@ class Post extends sequelize_1.Model {
         });
     }
     static associate() {
-        Post.belongsTo(user_1.default);
+        Post.belongsTo(user_1.default, { foreignKey: "user_id" });
     }
 }
 exports.default = Post;

@@ -92,7 +92,7 @@ class User extends sequelize_1.Model {
         });
     }
     static associate() {
-        User.hasMany(post_1.default);
+        User.hasMany(post_1.default, { foreignKey: "user_id" });
     }
 }
 exports.default = User;
