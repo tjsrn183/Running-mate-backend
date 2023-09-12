@@ -13,9 +13,8 @@ const sanitizefunc = (body) => {
 };
 const sanitizeHtml = (req, res, next) => {
     try {
-        res.locals.result = res.locals.data.map((post) => (Object.assign(Object.assign({}, post), { body: sanitizefunc(post.dataValues.content) })));
+        res.locals.result = res.locals.data.map((post) => (Object.assign(Object.assign({}, post.dataValues), { body: sanitizefunc(post.dataValues.content) })));
         console.log("sanitize 라우터에서  res.locals.result찍음", res.locals.result);
-        JSON.stringify(res.locals.result);
         res.json(res.locals.result);
         res.end();
     }

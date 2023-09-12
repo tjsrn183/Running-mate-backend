@@ -7,6 +7,7 @@ interface postType {
     nick: string;
     content: string;
     createdAt: string;
+    body: string;
   };
 }
 
@@ -20,7 +21,7 @@ const sanitizefunc = (body: string) => {
 export const sanitizeHtml: RequestHandler = (req, res, next) => {
   try {
     res.locals.result = res.locals.data.map((post: postType) => ({
-      ...post,
+      ...post.dataValues,
       body: sanitizefunc(post.dataValues.content),
     }));
     console.log(
