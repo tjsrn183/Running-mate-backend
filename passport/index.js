@@ -8,14 +8,12 @@ const kakaoStrategy_1 = __importDefault(require("./kakaoStrategy"));
 const user_1 = __importDefault(require("../models/user"));
 exports.default = () => {
     passport_1.default.serializeUser((data, done) => {
-        console.log("serializeUser에서의 accessToken", data.accessToken);
         done(null, { id: data.user.id, accessToken: data.accessToken });
     });
     passport_1.default.deserializeUser((user, done) => {
         user_1.default.findOne({ where: { id: user.id } })
             .then((result) => {
             const tokenUser = { user: result, accessToken: user.accessToken };
-            console.log("deserializeUser에서의 tokenUser", tokenUser);
             done(null, tokenUser);
         })
             .catch((err) => done(err));

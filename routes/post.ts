@@ -11,7 +11,7 @@ const router = express.Router();
 router.post("/", isLoggedIn, uploadPost);
 router.get("/:id", isLoggedIn, postDetail);
 router.get("/list/:page", isLoggedIn, postList, sanitizeHtml);
-router.put("/:id", isLoggedIn, editPost);
-router.delete("/:id", isLoggedIn, postDelete);
+router.put("/edit/:postId", isLoggedIn, editPost);
+router.delete("/delete/:postId", isLoggedIn, postDelete);
 
 export default router;

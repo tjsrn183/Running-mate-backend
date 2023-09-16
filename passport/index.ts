@@ -8,7 +8,6 @@ interface userSession {
 }
 export default () => {
   passport.serializeUser((data: any, done) => {
-    console.log("serializeUser에서의 accessToken", data.accessToken);
     done(null, { id: data.user.id, accessToken: data.accessToken });
   });
 
@@ -16,7 +15,7 @@ export default () => {
     User.findOne({ where: { id: user.id } })
       .then((result: any) => {
         const tokenUser = { user: result, accessToken: user.accessToken };
-        console.log("deserializeUser에서의 tokenUser", tokenUser);
+
         done(null, tokenUser);
       })
       .catch((err) => done(err));

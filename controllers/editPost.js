@@ -14,14 +14,15 @@ const models_1 = require("../models");
 const editPost = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const post = yield models_1.Post.update({
-            content: req.body.content,
+            content: req.body.body,
             title: req.body.title,
         }, {
             where: {
                 postId: req.params.postId,
             },
         });
-        res.json(post);
+        console.log("editPost에 post", post);
+        res.end();
     }
     catch (error) {
         console.log(error);

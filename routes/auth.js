@@ -25,14 +25,11 @@ router.get("/kakao", passport_1.default.authenticate("kakao"));
 router.get("/kakao/callback", passport_1.default.authenticate("kakao", {
     failureRedirect: "/?loginError=카카오 로그인 실패",
 }), (req, res) => {
-    console.log("req정보다", req.user);
     res.redirect("http://localhost:3000");
 });
 router.get("/userinfo", middlewares_1.isLoggedIn, (req, res) => {
     if (req.user) {
         res.json({ user: req.user });
-        console.log("userInfo 라우터에서 res.locals.accessToken", res.locals.user.accessToken);
-        console.log("userInfo 라우터에서 res.locals.user", res.locals.user);
     }
     else {
         res.json({

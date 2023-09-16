@@ -5,7 +5,7 @@ export const editPost: RequestHandler = async (req, res, next) => {
   try {
     const post = await Post.update(
       {
-        content: req.body.content,
+        content: req.body.body,
         title: req.body.title,
       },
       {
@@ -14,9 +14,9 @@ export const editPost: RequestHandler = async (req, res, next) => {
         },
       }
     );
-    res.json(post);
+    console.log("editPost에 post", post);
+
     res.end();
-  
   } catch (error) {
     console.log(error);
     next(error);
