@@ -14,6 +14,7 @@ const passport_1 = __importDefault(require("./passport"));
 const passport_2 = __importDefault(require("passport"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const post_1 = __importDefault(require("./routes/post"));
+const path_1 = __importDefault(require("path"));
 const cors_1 = __importDefault(require("cors"));
 //에러핸들러
 const errorHandler = (err, req, res, next) => {
@@ -26,7 +27,7 @@ const app = (0, express_1.default)();
 (0, passport_1.default)();
 app.set("port", process.env.PORT || 8003);
 app.use((0, morgan_1.default)("dev"));
-//app.use(express.static(path.join(__dirname, "public")));
+app.use(express_1.default.static(path_1.default.join(__dirname + "/public")));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)(process.env.COOKIE_SECRET));
