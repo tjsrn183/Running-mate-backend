@@ -9,6 +9,7 @@ import passportConfig from "./passport";
 import passport from "passport";
 import authRouter from "./routes/auth";
 import postRouter from "./routes/post";
+import runRouter from "./routes/run";
 import path from "path";
 import cors from "cors";
 
@@ -54,6 +55,7 @@ app.use(passport.session());
 
 app.use("/auth", authRouter);
 app.use("/post", postRouter);
+app.use("/run", runRouter);
 app.use("/", pageRouter);
 
 app.use((req, res, next) => {
