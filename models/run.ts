@@ -21,6 +21,7 @@ class Run extends Model<InferAttributes<Run>, InferCreationAttributes<Run>> {
   declare title: string;
   declare body: string;
   declare numOfPeople: number;
+  declare name: string;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     Run.init(
@@ -30,6 +31,7 @@ class Run extends Model<InferAttributes<Run>, InferCreationAttributes<Run>> {
           primaryKey: true,
           autoIncrement: true,
         },
+        name: { type: Sequelize.STRING(10), allowNull: false },
         user_id: { type: Sequelize.INTEGER, allowNull: false },
         start: { type: Sequelize.JSON, allowNull: false },
         end: { type: Sequelize.JSON, allowNull: false },
