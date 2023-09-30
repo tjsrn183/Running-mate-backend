@@ -14,7 +14,16 @@ const models_1 = require("../models");
 const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const getRunItemListFunc = yield models_1.Run.findAll({
-            attributes: ["start", "end", "name", "durationTime", "distance"],
+            attributes: [
+                "start",
+                "end",
+                "name",
+                "durationTime",
+                "distance",
+                "startLocationNaturalLan",
+                "endLocationNaturalLan",
+                "runItemId",
+            ],
             order: [["createdAt", "DESC"]],
         });
         console.log("getRunItemList에 runItem", getRunItemListFunc);

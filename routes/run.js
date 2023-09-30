@@ -11,5 +11,5 @@ const getRunItemList_1 = require("../controllers/getRunItemList");
 const router = express_1.default.Router();
 router.post("/register", middlewares_1.isLoggedIn, uploadRunItem_1.default);
 router.get("/:runItemId", middlewares_1.isLoggedIn, getRunItem_1.getRunItem);
-router.get("/list", middlewares_1.isLoggedIn, getRunItemList_1.getRunItemList);
+router.get("/list/:mock", getRunItemList_1.getRunItemList);
 exports.default = router;
