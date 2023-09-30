@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/register", isLoggedIn, uploadRunItem);
 router.get("/:runItemId", isLoggedIn, getRunItem);
-router.get("/list", isLoggedIn, getRunItemList);
+router.get("/list/:mock", getRunItemList);
 
 export default router;
