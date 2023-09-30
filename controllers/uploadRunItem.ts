@@ -6,18 +6,18 @@ const uploadRunItem: RequestHandler = async (req, res, next) => {
     const run = await Run.create({
       start: req.body.start,
       end: req.body.end,
-      startLocationNuturalLan: req.body.startLocationNuturalLan,
-      endLocationNuturalLat: req.body.endLocationNuturalLat,
+      startLocationNaturalLan: req.body.startLocationNaturalLan,
+      endLocationNaturalLan: req.body.endLocationNaturalLan,
       durationTime: req.body.durationTime,
       distance: req.body.distance,
       date: req.body.date,
       user_id: req.user?.user.dataValues.id,
       title: req.body.title,
       body: req.body.body,
-      numOfPeople: req.body.numOfPeople,
+      numberOfPeople: req.body.numberOfPeople,
       name: req.body.name,
     });
-    console.log("run컨트롤러에서 찍어봄", run);
+    console.log("run 업로드 컨트롤러에서 찍어봄", run);
     const responseData = {
       runItemId: run.dataValues.runItemId,
     };

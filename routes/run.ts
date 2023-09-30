@@ -8,7 +8,7 @@ import { getRunItemList } from "../controllers/getRunItemList";
 const router = express.Router();
 
 router.post("/register", isLoggedIn, uploadRunItem);
-router.get("/", isLoggedIn, getRunItem);
+router.get("/:runItemId", isLoggedIn, getRunItem);
 router.get("/list", isLoggedIn, getRunItemList);
 
 export default router;

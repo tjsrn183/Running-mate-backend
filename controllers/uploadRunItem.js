@@ -16,17 +16,18 @@ const uploadRunItem = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         const run = yield models_1.Run.create({
             start: req.body.start,
             end: req.body.end,
-            startLocationNuturalLan: req.body.startLocationNuturalLan,
-            endLocationNuturalLat: req.body.endLocationNuturalLat,
+            startLocationNaturalLan: req.body.startLocationNaturalLan,
+            endLocationNaturalLan: req.body.endLocationNaturalLan,
             durationTime: req.body.durationTime,
             distance: req.body.distance,
             date: req.body.date,
             user_id: (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.id,
             title: req.body.title,
             body: req.body.body,
-            numOfPeople: req.body.numOfPeople,
+            numberOfPeople: req.body.numberOfPeople,
+            name: req.body.name,
         });
-        console.log("run컨트롤러에서 찍어봄", run);
+        console.log("run 업로드 컨트롤러에서 찍어봄", run);
         const responseData = {
             runItemId: run.dataValues.runItemId,
         };
