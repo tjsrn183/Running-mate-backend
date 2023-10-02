@@ -47,7 +47,7 @@ class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
     );
   }
   static associate() {
-    Chat.belongsTo(ChatRoom, { foreignKey: "roomId" });
+    Chat.belongsTo(ChatRoom, { foreignKey: "roomId", targetKey: "roomId" });
   }
 }
 

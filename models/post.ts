@@ -58,7 +58,7 @@ class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
     );
   }
   static associate() {
-    Post.belongsTo(User, { foreignKey: "user_id" });
+    Post.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
   }
 }
 export default Post;

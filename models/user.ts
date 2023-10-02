@@ -6,6 +6,7 @@ import Sequelize, {
 } from "sequelize";
 import Post from "./post";
 import Run from "./run";
+import ChatRoom from "./chatRoom";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
@@ -90,8 +91,9 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     );
   }
   static associate() {
-    User.hasMany(Post, { foreignKey: "user_id" });
-    User.hasMany(Run, { foreignKey: "user_id" });
+    User.hasMany(Post, { foreignKey: "user_id", sourceKey: "id" });
+    User.hasMany(Run, { foreignKey: "user_id", sourceKey: "id" });
+    User.hasMany(ChatRoom, { foreignKey: "user_id", sourceKey: "id" });
   }
 }
 

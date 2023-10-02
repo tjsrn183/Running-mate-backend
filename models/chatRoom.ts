@@ -6,7 +6,7 @@ import Sequelize, {
   ForeignKey,
 } from "sequelize";
 import User from "./user";
-import { time, timeStamp } from "console";
+import Chat from "./chat";
 
 class ChatRoom extends Model<
   InferAttributes<ChatRoom>,
@@ -17,6 +17,7 @@ class ChatRoom extends Model<
   declare owner: string;
   declare roomId: CreationOptional<Number>;
   declare createdAt: CreationOptional<Date>;
+  declare user_id: CreationOptional<Number>;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     ChatRoom.init(
@@ -43,6 +44,10 @@ class ChatRoom extends Model<
           allowNull: false,
           defaultValue: Sequelize.NOW,
         },
+        user_id: {
+          type: Sequelize.NUMBER,
+          allowNull: false,
+        },
       },
       {
         sequelize,
@@ -57,7 +62,8 @@ class ChatRoom extends Model<
     );
   }
   static associate() {
-    ChatRoom.belongsTo(User, { foreignKey: "user_id" });
+    ChatRoom.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
+    ChatRoom.hasOne(Chat, { foreignKey: "roomId", sourceKey: "roomId" });
   }
 }
 

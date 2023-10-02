@@ -60,7 +60,7 @@ class Run extends Model<InferAttributes<Run>, InferCreationAttributes<Run>> {
     );
   }
   static associate() {
-    Run.belongsTo(User, { foreignKey: "user_id" });
+    Run.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
   }
 }
 export default Run;
