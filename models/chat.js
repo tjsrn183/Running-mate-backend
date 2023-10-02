@@ -27,46 +27,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importStar(require("sequelize"));
-const user_1 = __importDefault(require("./user"));
-class Post extends sequelize_1.Model {
+const chatRoom_1 = __importDefault(require("./chatRoom"));
+class Chat extends sequelize_1.Model {
     static initiate(sequelize) {
-        Post.init({
-            postId: {
+        Chat.init({
+            roomId: {
                 type: sequelize_1.default.INTEGER,
-                primaryKey: true,
-                autoIncrement: true,
+                allowNull: false,
             },
-            name: {
+            user: {
                 type: sequelize_1.default.STRING(10),
                 allowNull: false,
             },
-            title: {
-                type: sequelize_1.default.STRING(30),
+            message: {
+                type: sequelize_1.default.STRING(100),
                 allowNull: false,
             },
-            user_id: {
-                type: sequelize_1.default.INTEGER,
+            createdAt: {
+                type: sequelize_1.default.DATE,
                 allowNull: false,
+                defaultValue: sequelize_1.default.NOW,
             },
-            content: {
-                type: sequelize_1.default.TEXT,
-                allowNull: false,
-            },
-            createAt: sequelize_1.default.DATE,
-            updateAt: sequelize_1.default.DATE,
         }, {
             sequelize,
-            timestamps: true,
             underscored: false,
-            modelName: "Post",
-            tableName: "posts",
+            modelName: "Chat",
+            tableName: "chats",
+            timestamps: false,
             paranoid: false,
             charset: "utf8mb4",
             collate: "utf8mb4_general_ci",
         });
     }
     static associate() {
-        Post.belongsTo(user_1.default, { foreignKey: "user_id", targetKey: "id" });
+        Chat.belongsTo(chatRoom_1.default, { foreignKey: "roomId", targetKey: "roomId" });
     }
 }
-exports.default = Post;
+exports.default = Chat;

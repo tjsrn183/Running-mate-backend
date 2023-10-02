@@ -62,7 +62,7 @@ class Run extends sequelize_1.Model {
         });
     }
     static associate() {
-        Run.belongsTo(user_1.default, { foreignKey: "user_id" });
+        Run.belongsTo(user_1.default, { foreignKey: "user_id", targetKey: "id" });
     }
 }
 exports.default = Run;

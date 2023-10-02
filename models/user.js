@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importStar(require("sequelize"));
 const post_1 = __importDefault(require("./post"));
 const run_1 = __importDefault(require("./run"));
+const chatRoom_1 = __importDefault(require("./chatRoom"));
 class User extends sequelize_1.Model {
     static initiate(sequelize) {
         User.init({
@@ -93,8 +94,9 @@ class User extends sequelize_1.Model {
         });
     }
     static associate() {
-        User.hasMany(post_1.default, { foreignKey: "user_id" });
-        User.hasMany(run_1.default, { foreignKey: "user_id" });
+        User.hasMany(post_1.default, { foreignKey: "user_id", sourceKey: "id" });
+        User.hasMany(run_1.default, { foreignKey: "user_id", sourceKey: "id" });
+        User.hasMany(chatRoom_1.default, { foreignKey: "user_id", sourceKey: "id" });
     }
 }
 exports.default = User;
