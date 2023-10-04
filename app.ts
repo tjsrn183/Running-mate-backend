@@ -12,6 +12,7 @@ import postRouter from "./routes/post";
 import runRouter from "./routes/run";
 import path from "path";
 import cors from "cors";
+import { socketFunc } from "./socket";
 
 //에러핸들러
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
@@ -69,6 +70,7 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log(app.get("port"), " 번포트에서 대기 중");
 });
+socketFunc(server);

@@ -17,6 +17,7 @@ const post_1 = __importDefault(require("./routes/post"));
 const run_1 = __importDefault(require("./routes/run"));
 const path_1 = __importDefault(require("path"));
 const cors_1 = __importDefault(require("cors"));
+const socket_1 = require("./socket");
 //에러핸들러
 const errorHandler = (err, req, res, next) => {
     res.locals.message = err.message;
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
     }
 });
 app.use(errorHandler);
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
     console.log(app.get("port"), " 번포트에서 대기 중");
 });
+(0, socket_1.socketFunc)(server);
