@@ -15,9 +15,9 @@ class ChatRoom extends Model<
   declare title: string;
   declare max: number;
   declare owner: string;
-  declare roomId: CreationOptional<Number>;
+  declare roomId: CreationOptional<number>;
   declare createdAt: CreationOptional<Date>;
-  declare user_id: CreationOptional<Number>;
+  declare user_id: CreationOptional<number>;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     ChatRoom.init(
@@ -45,7 +45,7 @@ class ChatRoom extends Model<
           defaultValue: Sequelize.NOW,
         },
         user_id: {
-          type: Sequelize.NUMBER,
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
       },

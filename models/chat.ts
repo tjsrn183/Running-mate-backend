@@ -8,7 +8,7 @@ import Sequelize, {
 import ChatRoom from "./chatRoom";
 
 class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
-  declare roomId: number;
+  declare roomId: CreationOptional<number>;
   declare user: string;
   declare message: string;
   declare createdAt: CreationOptional<Date>;

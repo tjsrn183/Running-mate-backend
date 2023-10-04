@@ -55,7 +55,7 @@ class ChatRoom extends sequelize_1.Model {
                 defaultValue: sequelize_1.default.NOW,
             },
             user_id: {
-                type: sequelize_1.default.NUMBER,
+                type: sequelize_1.default.INTEGER,
                 allowNull: false,
             },
         }, {

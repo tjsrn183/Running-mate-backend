@@ -20,8 +20,5 @@ export const socketFunc = (server: http.Server) => {
     socket.on("reply", (data) => {
       console.log(data);
     });
-    setInterval(() => {
-      socket.emit("reply", "안녀어어어엉");
-    }, 3000);
   });
 };
