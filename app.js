@@ -15,6 +15,7 @@ const passport_2 = __importDefault(require("passport"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const post_1 = __importDefault(require("./routes/post"));
 const run_1 = __importDefault(require("./routes/run"));
+const chat_1 = __importDefault(require("./routes/chat"));
 const path_1 = __importDefault(require("path"));
 const cors_1 = __importDefault(require("cors"));
 const socket_1 = require("./socket");
@@ -33,7 +34,7 @@ app.use(express_1.default.static(path_1.default.join(__dirname + "/public")));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)(process.env.COOKIE_SECRET));
-app.use((0, express_session_1.default)({
+const sessionMiddleware = app.use((0, express_session_1.default)({
     resave: false,
     saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,
@@ -53,9 +54,18 @@ models_1.sequelize
 });
 app.use(passport_2.default.initialize());
 app.use(passport_2.default.session());
+app.use((req, res, next) => {
+    var _a;
+    if (!req.session.name) {
+        req.session.name = (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.nick;
+        console.log("req.session.name이다!", req.session.name);
+    }
+    next();
+});
 app.use("/auth", auth_1.default);
 app.use("/post", post_1.default);
 app.use("/run", run_1.default);
+app.use("/chat", chat_1.default);
 app.use("/", page_1.default);
 app.use((req, res, next) => {
     try {
@@ -70,4 +80,4 @@ app.use(errorHandler);
 const server = app.listen(app.get("port"), () => {
     console.log(app.get("port"), " 번포트에서 대기 중");
 });
-(0, socket_1.socketFunc)(server);
+(0, socket_1.socketFunc)(server, app, sessionMiddleware);

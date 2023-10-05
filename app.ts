@@ -10,6 +10,7 @@ import passport from "passport";
 import authRouter from "./routes/auth";
 import postRouter from "./routes/post";
 import runRouter from "./routes/run";
+import chatRouter from "./routes/chat";
 import path from "path";
 import cors from "cors";
 import { socketFunc } from "./socket";
@@ -31,7 +32,7 @@ app.use(express.static(path.join(__dirname + "/public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(
+const sessionMiddleware = app.use(
   session({
     resave: false,
     saveUninitialized: false,
@@ -42,6 +43,7 @@ app.use(
     },
   })
 );
+
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 sequelize
   .sync({ force: false })
@@ -53,10 +55,17 @@ sequelize
   });
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use((req, res, next) => {
+  if (!req.session.name) {
+    req.session.name = req.user?.user.dataValues.nick;
+    console.log("req.session.name이다!", req.session.name);
+  }
+  next();
+});
 app.use("/auth", authRouter);
 app.use("/post", postRouter);
 app.use("/run", runRouter);
+app.use("/chat", chatRouter);
 app.use("/", pageRouter);
 
 app.use((req, res, next) => {
@@ -73,4 +82,4 @@ app.use(errorHandler);
 const server = app.listen(app.get("port"), () => {
   console.log(app.get("port"), " 번포트에서 대기 중");
 });
-socketFunc(server);
+socketFunc(server, app, sessionMiddleware);
