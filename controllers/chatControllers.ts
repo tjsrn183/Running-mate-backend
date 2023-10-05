@@ -45,3 +45,18 @@ export const removeRoom: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+export const sendChat: RequestHandler = async (req, res, next) => {
+  try {
+    const chat = await Chat.create({
+      roomId: parseInt(req.params.id),
+      user: req.body.name,
+      message: req.body.message,
+    });
+    req.app.get("io").of("/chat").to(req.params.id).emit("chat", chat);
+    res.end();
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
