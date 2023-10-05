@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeRoom = exports.enterRoom = exports.createChatRoom = void 0;
+exports.sendChat = exports.removeRoom = exports.enterRoom = exports.createChatRoom = void 0;
 const models_1 = require("../models");
 const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -57,3 +57,19 @@ const removeRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.removeRoom = removeRoom;
+const sendChat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const chat = yield models_1.Chat.create({
+            roomId: parseInt(req.params.id),
+            user: req.body.name,
+            message: req.body.message,
+        });
+        req.app.get("io").of("/chat").to(req.params.id).emit("chat", chat);
+        res.end();
+    }
+    catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+exports.sendChat = sendChat;

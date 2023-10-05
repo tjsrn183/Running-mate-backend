@@ -12,6 +12,6 @@ const router = express.Router();
 router.post("/room", isLoggedIn, createChatRoom);
 router.get("/room/:id", isLoggedIn, enterRoom);
 router.delete("/room/:id", isLoggedIn, removeRoom);
-router.post("/room/:id/chat", sendChat);
+router.post("/room/:id/chat", isLoggedIn, sendChat);
 
 export default router;
