@@ -10,7 +10,7 @@ import ChatRoom from "./chatRoom";
 
 class Run extends Model<InferAttributes<Run>, InferCreationAttributes<Run>> {
   declare runItemId: CreationOptional<number>;
-  declare user_id: ForeignKey<User["id"]>;
+  declare UserId: ForeignKey<User["id"]>;
   declare createAt: CreationOptional<Date>;
   declare updateAt: CreationOptional<Date>;
   declare start: {};

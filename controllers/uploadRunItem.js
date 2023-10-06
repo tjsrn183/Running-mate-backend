@@ -21,7 +21,7 @@ const uploadRunItem = (req, res, next) => __awaiter(void 0, void 0, void 0, func
             durationTime: req.body.durationTime,
             distance: req.body.distance,
             date: req.body.date,
-            user_id: (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.id,
+            UserId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.id,
             title: req.body.title,
             body: req.body.body,
             numberOfPeople: req.body.numberOfPeople,

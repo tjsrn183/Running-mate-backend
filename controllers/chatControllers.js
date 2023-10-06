@@ -12,14 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendChat = exports.removeRoom = exports.enterRoom = exports.createChatRoom = void 0;
 const models_1 = require("../models");
 const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b;
     try {
         const newRoom = yield models_1.ChatRoom.create({
             title: req.body.title,
             max: req.body.max,
             owner: req.body.name,
-            user_id: (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.id,
+            UserId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.id,
+            RunRunItemId: req.body.runItemId,
         });
+        console.log("chatControllers에서 실행한 req.user.user.dataValues.id임", (_b = req.user) === null || _b === void 0 ? void 0 : _b.user.dataValues.id);
         const io = req.app.get("io");
         io.of("/room").emit("newRoom", newRoom);
         res.end();
@@ -42,7 +44,7 @@ const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             return alert("방이 꽉 찼습니다.");
         }
         const chat = yield models_1.Chat.findAll({
-            where: { roomId: req.params.id },
+            where: { ChatRoomRoomId: req.params.id },
             order: [["createdAt", "DESC"]],
         });
         res.send(chat);
@@ -57,7 +59,7 @@ exports.enterRoom = enterRoom;
 const removeRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield models_1.ChatRoom.destroy({ where: { roomId: req.params.id } });
-        yield models_1.Chat.destroy({ where: { roomId: req.params.id } });
+        yield models_1.Chat.destroy({ where: { ChatRoomRoomId: req.params.id } });
         res.end();
     }
     catch (error) {
@@ -69,7 +71,7 @@ exports.removeRoom = removeRoom;
 const sendChat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const chat = yield models_1.Chat.create({
-            roomId: parseInt(req.params.id),
+            ChatRoomRoomId: parseInt(req.params.id),
             user: req.body.name,
             message: req.body.message,
         });

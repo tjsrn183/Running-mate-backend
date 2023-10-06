@@ -31,7 +31,7 @@ const chatRoom_1 = __importDefault(require("./chatRoom"));
 class Chat extends sequelize_1.Model {
     static initiate(sequelize) {
         Chat.init({
-            roomId: {
+            chatId: {
                 type: sequelize_1.default.INTEGER,
                 allowNull: false,
             },

@@ -8,7 +8,8 @@ import Sequelize, {
 import ChatRoom from "./chatRoom";
 
 class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
-  declare roomId: ForeignKey<ChatRoom["roomId"]>;
+  declare ChatRoomRoomId: ForeignKey<ChatRoom["roomId"]>;
+  declare chatId: CreationOptional<number>;
   declare user: string;
   declare message: string;
   declare createdAt: CreationOptional<Date>;
@@ -16,7 +17,7 @@ class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
   static initiate(sequelize: Sequelize.Sequelize) {
     Chat.init(
       {
-        roomId: {
+        chatId: {
           type: Sequelize.INTEGER,
           allowNull: false,
         },

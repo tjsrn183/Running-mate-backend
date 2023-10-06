@@ -27,7 +27,7 @@ const uploadPost = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             title: req.body.title,
             content: req.body.body,
             name: req.body.nick,
-            user_id: (_c = req.user) === null || _c === void 0 ? void 0 : _c.user.dataValues.id,
+            UserId: (_c = req.user) === null || _c === void 0 ? void 0 : _c.user.dataValues.id,
         });
         const responseData = {
             postId: post.dataValues.postId,

@@ -14,7 +14,7 @@ export const uploadPost: RequestHandler = async (req, res, next) => {
       title: req.body.title,
       content: req.body.body,
       name: req.body.nick,
-      user_id: req.user?.user.dataValues.id,
+      UserId: req.user?.user.dataValues.id,
     });
     const responseData = {
       postId: post.dataValues.postId,

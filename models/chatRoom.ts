@@ -18,8 +18,8 @@ class ChatRoom extends Model<
   declare owner: string;
   declare roomId: CreationOptional<number>;
   declare createdAt: CreationOptional<Date>;
-  declare user_id: ForeignKey<User["id"]>;
-  declare runItemId: ForeignKey<Run["runItemId"]>;
+  declare UserId: ForeignKey<User["id"]>;
+  declare RunRunItemId: ForeignKey<Run["runItemId"]>;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     ChatRoom.init(

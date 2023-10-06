@@ -11,7 +11,7 @@ const uploadRunItem: RequestHandler = async (req, res, next) => {
       durationTime: req.body.durationTime,
       distance: req.body.distance,
       date: req.body.date,
-      user_id: req.user?.user.dataValues.id,
+      UserId: req.user?.user.dataValues.id,
       title: req.body.title,
       body: req.body.body,
       numberOfPeople: req.body.numberOfPeople,

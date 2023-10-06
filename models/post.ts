@@ -14,7 +14,7 @@ class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
   declare updateAt: CreationOptional<Date>;
   declare title: string;
   declare name: string;
-  declare user_id: ForeignKey<User["id"]>;
+  declare UserId: ForeignKey<User["id"]>;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     Post.init(
