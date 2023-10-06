@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importStar(require("sequelize"));
 const user_1 = __importDefault(require("./user"));
 const chat_1 = __importDefault(require("./chat"));
+const run_1 = __importDefault(require("./run"));
 class ChatRoom extends sequelize_1.Model {
     static initiate(sequelize) {
         ChatRoom.init({
@@ -54,10 +55,6 @@ class ChatRoom extends sequelize_1.Model {
                 allowNull: false,
                 defaultValue: sequelize_1.default.NOW,
             },
-            user_id: {
-                type: sequelize_1.default.INTEGER,
-                allowNull: false,
-            },
         }, {
             sequelize,
             timestamps: false,
@@ -70,8 +67,9 @@ class ChatRoom extends sequelize_1.Model {
         });
     }
     static associate() {
-        ChatRoom.belongsTo(user_1.default, { foreignKey: "user_id", targetKey: "id" });
-        ChatRoom.hasOne(chat_1.default, { foreignKey: "roomId", sourceKey: "roomId" });
+        ChatRoom.belongsTo(user_1.default);
+        ChatRoom.hasOne(chat_1.default);
+        ChatRoom.belongsTo(run_1.default);
     }
 }
 exports.default = ChatRoom;

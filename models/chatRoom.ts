@@ -7,6 +7,7 @@ import Sequelize, {
 } from "sequelize";
 import User from "./user";
 import Chat from "./chat";
+import Run from "./run";
 
 class ChatRoom extends Model<
   InferAttributes<ChatRoom>,
@@ -17,7 +18,8 @@ class ChatRoom extends Model<
   declare owner: string;
   declare roomId: CreationOptional<number>;
   declare createdAt: CreationOptional<Date>;
-  declare user_id: CreationOptional<number>;
+  declare user_id: ForeignKey<User["id"]>;
+  declare runItemId: ForeignKey<Run["runItemId"]>;
 
   static initiate(sequelize: Sequelize.Sequelize) {
     ChatRoom.init(
@@ -44,10 +46,6 @@ class ChatRoom extends Model<
           allowNull: false,
           defaultValue: Sequelize.NOW,
         },
-        user_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-        },
       },
       {
         sequelize,
@@ -62,8 +60,9 @@ class ChatRoom extends Model<
     );
   }
   static associate() {
-    ChatRoom.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
-    ChatRoom.hasOne(Chat, { foreignKey: "roomId", sourceKey: "roomId" });
+    ChatRoom.belongsTo(User);
+    ChatRoom.hasOne(Chat);
+    ChatRoom.belongsTo(Run);
   }
 }
 

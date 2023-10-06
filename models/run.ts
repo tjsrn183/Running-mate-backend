@@ -2,13 +2,15 @@ import Sequelize, {
   CreationOptional,
   InferAttributes,
   InferCreationAttributes,
+  ForeignKey,
   Model,
 } from "sequelize";
 import User from "./user";
+import ChatRoom from "./chatRoom";
 
 class Run extends Model<InferAttributes<Run>, InferCreationAttributes<Run>> {
   declare runItemId: CreationOptional<number>;
-  declare user_id: CreationOptional<number>;
+  declare user_id: ForeignKey<User["id"]>;
   declare createAt: CreationOptional<Date>;
   declare updateAt: CreationOptional<Date>;
   declare start: {};
@@ -32,7 +34,6 @@ class Run extends Model<InferAttributes<Run>, InferCreationAttributes<Run>> {
           autoIncrement: true,
         },
         name: { type: Sequelize.STRING(10), allowNull: false },
-        user_id: { type: Sequelize.INTEGER, allowNull: false },
         start: { type: Sequelize.JSON, allowNull: false },
         end: { type: Sequelize.JSON, allowNull: false },
         startLocationNaturalLan: { type: Sequelize.STRING, allowNull: false },
@@ -60,7 +61,8 @@ class Run extends Model<InferAttributes<Run>, InferCreationAttributes<Run>> {
     );
   }
   static associate() {
-    Run.belongsTo(User, { foreignKey: "user_id", targetKey: "id" });
+    Run.belongsTo(User);
+    Run.hasOne(ChatRoom);
   }
 }
 export default Run;

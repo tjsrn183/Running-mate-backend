@@ -12,14 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendChat = exports.removeRoom = exports.enterRoom = exports.createChatRoom = void 0;
 const models_1 = require("../models");
 const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const newRoom = yield models_1.ChatRoom.create({
             title: req.body.title,
             max: req.body.max,
             owner: req.body.name,
+            user_id: (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.id,
         });
         const io = req.app.get("io");
         io.of("/room").emit("newRoom", newRoom);
+        res.end();
     }
     catch (error) {
         console.error(error);
@@ -35,9 +38,15 @@ const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         }
         const io = req.app.get("io");
         const { rooms } = io.of("/chat").adapter;
-        if (rooms.max <= rooms.get(req.params.id).size) {
+        if (room.max <= rooms.get(req.params.id).size) {
             return alert("방이 꽉 찼습니다.");
         }
+        const chat = yield models_1.Chat.findAll({
+            where: { roomId: req.params.id },
+            order: [["createdAt", "DESC"]],
+        });
+        res.send(chat);
+        res.end();
     }
     catch (error) {
         console.error(error);

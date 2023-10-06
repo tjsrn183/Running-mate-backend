@@ -2,13 +2,13 @@ import Sequelize, {
   CreationOptional,
   InferAttributes,
   InferCreationAttributes,
-  Model,
   ForeignKey,
+  Model,
 } from "sequelize";
 import ChatRoom from "./chatRoom";
 
 class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
-  declare roomId: CreationOptional<number>;
+  declare roomId: ForeignKey<ChatRoom["roomId"]>;
   declare user: string;
   declare message: string;
   declare createdAt: CreationOptional<Date>;
@@ -47,7 +47,7 @@ class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
     );
   }
   static associate() {
-    Chat.belongsTo(ChatRoom, { foreignKey: "roomId", targetKey: "roomId" });
+    Chat.belongsTo(ChatRoom);
   }
 }
 

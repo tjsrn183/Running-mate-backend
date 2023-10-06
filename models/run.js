@@ -28,6 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importStar(require("sequelize"));
 const user_1 = __importDefault(require("./user"));
+const chatRoom_1 = __importDefault(require("./chatRoom"));
 class Run extends sequelize_1.Model {
     static initiate(sequelize) {
         Run.init({
@@ -37,7 +38,6 @@ class Run extends sequelize_1.Model {
                 autoIncrement: true,
             },
             name: { type: sequelize_1.default.STRING(10), allowNull: false },
-            user_id: { type: sequelize_1.default.INTEGER, allowNull: false },
             start: { type: sequelize_1.default.JSON, allowNull: false },
             end: { type: sequelize_1.default.JSON, allowNull: false },
             startLocationNaturalLan: { type: sequelize_1.default.STRING, allowNull: false },
@@ -62,7 +62,8 @@ class Run extends sequelize_1.Model {
         });
     }
     static associate() {
-        Run.belongsTo(user_1.default, { foreignKey: "user_id", targetKey: "id" });
+        Run.belongsTo(user_1.default);
+        Run.hasOne(chatRoom_1.default);
     }
 }
 exports.default = Run;

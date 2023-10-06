@@ -14,12 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRunItem = void 0;
 const models_1 = require("../models");
-const user_1 = __importDefault(require("../models/user"));
+const chatRoom_1 = __importDefault(require("../models/chatRoom"));
 const getRunItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const getRunItemfunc = yield models_1.Run.findOne({
             where: { runItemId: req.params.runItemId },
-            include: { model: user_1.default, attributes: ["nick"] },
+            include: { model: chatRoom_1.default, attributes: ["roomId"] },
         });
         console.log("getRunItem에 runItem", getRunItemfunc);
         res.json(getRunItemfunc);

@@ -44,10 +44,6 @@ class Post extends sequelize_1.Model {
                 type: sequelize_1.default.STRING(30),
                 allowNull: false,
             },
-            user_id: {
-                type: sequelize_1.default.INTEGER,
-                allowNull: false,
-            },
             content: {
                 type: sequelize_1.default.TEXT,
                 allowNull: false,
@@ -66,7 +62,7 @@ class Post extends sequelize_1.Model {
         });
     }
     static associate() {
-        Post.belongsTo(user_1.default, { foreignKey: "user_id", targetKey: "id" });
+        Post.belongsTo(user_1.default);
     }
 }
 exports.default = Post;

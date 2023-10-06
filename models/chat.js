@@ -60,7 +60,7 @@ class Chat extends sequelize_1.Model {
         });
     }
     static associate() {
-        Chat.belongsTo(chatRoom_1.default, { foreignKey: "roomId", targetKey: "roomId" });
+        Chat.belongsTo(chatRoom_1.default);
     }
 }
 exports.default = Chat;

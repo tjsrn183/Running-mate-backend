@@ -7,10 +7,12 @@ export const createChatRoom: RequestHandler = async (req, res, next) => {
       title: req.body.title,
       max: req.body.max,
       owner: req.body.name,
+      user_id: req.user?.user.dataValues.id,
     });
 
     const io = req.app.get("io");
     io.of("/room").emit("newRoom", newRoom);
+    res.end();
   } catch (error) {
     console.error(error);
     next(error);
@@ -26,9 +28,15 @@ export const enterRoom: RequestHandler = async (req, res, next) => {
 
     const io = req.app.get("io");
     const { rooms } = io.of("/chat").adapter;
-    if (rooms.max <= rooms.get(req.params.id).size) {
+    if (room.max <= rooms.get(req.params.id).size) {
       return alert("방이 꽉 찼습니다.");
     }
+    const chat = await Chat.findAll({
+      where: { roomId: req.params.id },
+      order: [["createdAt", "DESC"]],
+    });
+    res.send(chat);
+    res.end();
   } catch (error) {
     console.error(error);
     next(error);
