@@ -37,7 +37,7 @@ export const enterRoom: RequestHandler = async (req, res, next) => {
     }
     const chat = await Chat.findAll({
       where: { ChatRoomRoomId: req.params.id },
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "ASC"]],
     });
     console.log("enterRoom컨트롤러에서 chat임", chat);
     res.send(chat);
