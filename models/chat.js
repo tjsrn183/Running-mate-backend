@@ -34,6 +34,8 @@ class Chat extends sequelize_1.Model {
             chatId: {
                 type: sequelize_1.default.INTEGER,
                 allowNull: false,
+                primaryKey: true,
+                autoIncrement: true,
             },
             user: {
                 type: sequelize_1.default.STRING(10),

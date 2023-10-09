@@ -72,13 +72,14 @@ const removeRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 exports.removeRoom = removeRoom;
 const sendChat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const roomId = parseInt(req.params.id);
         const chat = yield models_1.Chat.create({
-            ChatRoomRoomId: req.body.roomId,
-            user: req.body.name,
+            ChatRoomRoomId: roomId,
+            user: req.body.user,
             message: req.body.message,
         });
         console.log("sendChat컨트롤러에서 chat임", chat);
-        req.app.get("io").of("/chat").to(req.body.roomId).emit("chat", chat);
+        req.app.get("io").of("/chat").to(roomId).emit("chat", chat);
         res.end();
     }
     catch (error) {

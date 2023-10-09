@@ -20,6 +20,8 @@ class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
         chatId: {
           type: Sequelize.INTEGER,
           allowNull: false,
+          primaryKey: true,
+          autoIncrement: true,
         },
         user: {
           type: Sequelize.STRING(10),

@@ -34,7 +34,7 @@ export const socketFunc = (
         chat: `${socket.request.session.name}님이 접속하셨습니다.`,
       });
     });
-    socket.on("disconnect", async (roomId: number) => {
+    socket.on("leave", async (roomId: number) => {
       const roomIdString = roomId.toString();
       console.log("chat네임스페이스 연결해제");
       const { referer } = socket.request.headers;
