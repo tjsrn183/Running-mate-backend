@@ -14,7 +14,7 @@ const models_1 = require("../models");
 const removeRoom = (roomId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield models_1.ChatRoom.destroy({ where: { roomId: roomId } });
-        yield models_1.Chat.destroy({ where: { roomId: roomId } });
+        yield models_1.Chat.destroy({ where: { ChatRoomRoomId: roomId } });
     }
     catch (err) {
         console.log(err);

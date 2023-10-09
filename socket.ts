@@ -1,6 +1,6 @@
 import SocketIO, { Server } from "socket.io";
 import http from "http";
-import { removeRoom } from "./services/indes";
+import { removeRoom } from "./services";
 
 export const socketFunc = (
   server: http.Server,
@@ -34,24 +34,23 @@ export const socketFunc = (
         chat: `${socket.request.session.name}님이 접속하셨습니다.`,
       });
     });
-    socket.on("disconnect", async () => {
+    socket.on("disconnect", async (roomId: number) => {
+      const roomIdString = roomId.toString();
       console.log("chat네임스페이스 연결해제");
       const { referer } = socket.request.headers;
       console.log("referer이다", referer);
-      const roomId = new URL(referer).pathname.split("/").at(-1);
-      const currentRoom = chat.adapter.rooms.get(roomId!);
+
+      const currentRoom = chat.adapter.rooms.get(roomIdString!);
       const userCount = currentRoom?.size || 0;
       if (userCount === 0) {
-        await removeRoom(roomId!);
+        await removeRoom(roomIdString!);
         room.emit("removeRoom", roomId);
         console.log("방 삭제요청 성공");
       } else {
-        socket
-          .to(roomId)
-          .emit("exit", {
-            user: "system",
-            chat: `${socket.request.session.name}님이 퇴장하셨습니다.`,
-          });
+        socket.to(roomId).emit("exit", {
+          user: "system",
+          chat: `${socket.request.session.name}님이 퇴장하셨습니다.`,
+        });
       }
     });
   });

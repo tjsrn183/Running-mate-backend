@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.socketFunc = void 0;
 const socket_io_1 = require("socket.io");
-const indes_1 = require("./services/indes");
+const services_1 = require("./services");
 const socketFunc = (server, app, sessionMiddleware) => {
     const io = new socket_io_1.Server(server, {
         cors: {
@@ -38,22 +38,20 @@ const socketFunc = (server, app, sessionMiddleware) => {
                 chat: `${socket.request.session.name}님이 접속하셨습니다.`,
             });
         });
-        socket.on("disconnect", () => __awaiter(void 0, void 0, void 0, function* () {
+        socket.on("disconnect", (roomId) => __awaiter(void 0, void 0, void 0, function* () {
+            const roomIdString = roomId.toString();
             console.log("chat네임스페이스 연결해제");
             const { referer } = socket.request.headers;
             console.log("referer이다", referer);
-            const roomId = new URL(referer).pathname.split("/").at(-1);
-            const currentRoom = chat.adapter.rooms.get(roomId);
+            const currentRoom = chat.adapter.rooms.get(roomIdString);
             const userCount = (currentRoom === null || currentRoom === void 0 ? void 0 : currentRoom.size) || 0;
             if (userCount === 0) {
-                yield (0, indes_1.removeRoom)(roomId);
+                yield (0, services_1.removeRoom)(roomIdString);
                 room.emit("removeRoom", roomId);
                 console.log("방 삭제요청 성공");
             }
             else {
-                socket
-                    .to(roomId)
-                    .emit("exit", {
+                socket.to(roomId).emit("exit", {
                     user: "system",
                     chat: `${socket.request.session.name}님이 퇴장하셨습니다.`,
                 });

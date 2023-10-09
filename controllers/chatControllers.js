@@ -33,6 +33,7 @@ const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.createChatRoom = createChatRoom;
 const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
     try {
         const room = yield models_1.ChatRoom.findOne({ where: { roomId: req.params.id } });
         if (!room) {
@@ -40,13 +41,14 @@ const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         }
         const io = req.app.get("io");
         const { rooms } = io.of("/chat").adapter;
-        if (room.max <= rooms.get(req.params.id).size) {
+        if (room.max <= ((_c = rooms.get(req.params.id)) === null || _c === void 0 ? void 0 : _c.size)) {
             return alert("방이 꽉 찼습니다.");
         }
         const chat = yield models_1.Chat.findAll({
             where: { ChatRoomRoomId: req.params.id },
             order: [["createdAt", "DESC"]],
         });
+        console.log("enterRoom컨트롤러에서 chat임", chat);
         res.send(chat);
         res.end();
     }
@@ -71,11 +73,12 @@ exports.removeRoom = removeRoom;
 const sendChat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const chat = yield models_1.Chat.create({
-            ChatRoomRoomId: parseInt(req.params.id),
+            ChatRoomRoomId: req.body.roomId,
             user: req.body.name,
             message: req.body.message,
         });
-        req.app.get("io").of("/chat").to(req.params.id).emit("chat", chat);
+        console.log("sendChat컨트롤러에서 chat임", chat);
+        req.app.get("io").of("/chat").to(req.body.roomId).emit("chat", chat);
         res.end();
     }
     catch (error) {

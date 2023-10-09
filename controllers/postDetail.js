@@ -17,6 +17,7 @@ const models_1 = require("../models");
 const user_1 = __importDefault(require("../models/user"));
 const postDetail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log("postDetail 컨트롤러 실행됨");
         const getPostDetaile = yield models_1.Post.findOne({
             where: { postId: req.params.id },
             include: { model: user_1.default, attributes: ["nick"] },

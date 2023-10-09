@@ -4,6 +4,7 @@ import User from "../models/user";
 
 export const postDetail: RequestHandler = async (req, res, next) => {
   try {
+    console.log("postDetail 컨트롤러 실행됨");
     const getPostDetaile = await Post.findOne({
       where: { postId: req.params.id },
       include: { model: User, attributes: ["nick"] },
