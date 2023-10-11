@@ -37,12 +37,12 @@ const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     try {
         const room = yield models_1.ChatRoom.findOne({ where: { roomId: req.params.id } });
         if (!room) {
-            return alert("존재하지 않는 방입니다.");
+            return res.send("존재하지 않는 방입니다.");
         }
         const io = req.app.get("io");
         const { rooms } = io.of("/chat").adapter;
         if (room.max <= ((_c = rooms.get(req.params.id)) === null || _c === void 0 ? void 0 : _c.size)) {
-            return alert("방이 꽉 찼습니다.");
+            return res.send("방이 꽉 찼습니다.");
         }
         const chat = yield models_1.Chat.findAll({
             where: { ChatRoomRoomId: req.params.id },

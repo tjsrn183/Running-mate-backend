@@ -39,6 +39,7 @@ router.post("/kakao/logout", async (req, res) => {
     const ACCESS_TOKEN = res.locals.user.accessToken;
     console.log("로그아웃 라우터에서 req.user", req.user);
     console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
+
     await axios({
       method: "post",
       url: "https://kapi.kakao.com/v1/user/logout",

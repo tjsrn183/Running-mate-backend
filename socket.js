@@ -12,32 +12,46 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.socketFunc = void 0;
 const socket_io_1 = require("socket.io");
 const services_1 = require("./services");
-const socketFunc = (server, app, sessionMiddleware) => {
+const models_1 = require("./models");
+const socketFunc = (server, app) => {
     const io = new socket_io_1.Server(server, {
         cors: {
-            origin: "*",
+            origin: "http://localhost:3000",
+            credentials: true,
+            methods: ["GET", "POST"],
         },
     });
     app.set("io", io);
     const room = io.of("/room");
     const chat = io.of("/chat");
-    const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next);
-    chat.use(wrap(sessionMiddleware));
-    room.on("/connection", (socket) => {
+    room.on("connection", (socket) => {
         console.log("room 접속");
         socket.on("disconnect", () => {
             console.log("room 접속 해제");
         });
     });
-    chat.on("/connection", (socket) => {
+    chat.on("connection", (socket) => {
+        const username = socket.handshake.query.username;
+        console.log("username임", username);
         console.log("chat 접속");
         socket.on("join", (data) => {
             socket.join(data);
             socket.to(data).emit("join", {
                 user: "system",
-                chat: `${socket.request.session.name}님이 접속하셨습니다.`,
+                chat: `${username}님이 접속하셨습니다.`,
             });
         });
+        //
+        socket.on("message", (data) => {
+            const chat = models_1.Chat.create({
+                ChatRoomRoomId: data.roomId,
+                user: data.user,
+                message: data.message,
+            });
+            console.log("sendChat컨트롤러에서 chat임", chat);
+            socket.to(data.roomId).emit("chat", chat);
+        });
+        //
         socket.on("leave", (roomId) => __awaiter(void 0, void 0, void 0, function* () {
             const roomIdString = roomId.toString();
             console.log("chat네임스페이스 연결해제");
@@ -53,7 +67,7 @@ const socketFunc = (server, app, sessionMiddleware) => {
             else {
                 socket.to(roomId).emit("exit", {
                     user: "system",
-                    chat: `${socket.request.session.name}님이 퇴장하셨습니다.`,
+                    chat: `${username}님이 퇴장하셨습니다.`,
                 });
             }
         }));

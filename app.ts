@@ -55,13 +55,7 @@ sequelize
   });
 app.use(passport.initialize());
 app.use(passport.session());
-app.use((req, res, next) => {
-  if (!req.session.name) {
-    req.session.name = req.user?.user.dataValues.nick;
-    console.log("req.session.name이다!", req.session.name);
-  }
-  next();
-});
+
 app.use("/auth", authRouter);
 app.use("/post", postRouter);
 app.use("/run", runRouter);
@@ -82,4 +76,4 @@ app.use(errorHandler);
 const server = app.listen(app.get("port"), () => {
   console.log(app.get("port"), " 번포트에서 대기 중");
 });
-socketFunc(server, app, sessionMiddleware);
+socketFunc(server, app);

@@ -54,14 +54,6 @@ models_1.sequelize
 });
 app.use(passport_2.default.initialize());
 app.use(passport_2.default.session());
-app.use((req, res, next) => {
-    var _a;
-    if (!req.session.name) {
-        req.session.name = (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.nick;
-        console.log("req.session.name이다!", req.session.name);
-    }
-    next();
-});
 app.use("/auth", auth_1.default);
 app.use("/post", post_1.default);
 app.use("/run", run_1.default);
@@ -80,4 +72,4 @@ app.use(errorHandler);
 const server = app.listen(app.get("port"), () => {
     console.log(app.get("port"), " 번포트에서 대기 중");
 });
-(0, socket_1.socketFunc)(server, app, sessionMiddleware);
+(0, socket_1.socketFunc)(server, app);
