@@ -58,7 +58,7 @@ export const removeRoom: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
-
+/*
 export const sendChat: RequestHandler = async (req, res, next) => {
   try {
     const roomId = parseInt(req.params.id);
@@ -74,4 +74,4 @@ export const sendChat: RequestHandler = async (req, res, next) => {
     console.error(error);
     next(error);
   }
-};
+};*/

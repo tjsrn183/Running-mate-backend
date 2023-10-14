@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendChat = exports.removeRoom = exports.enterRoom = exports.createChatRoom = void 0;
+exports.removeRoom = exports.enterRoom = exports.createChatRoom = void 0;
 const models_1 = require("../models");
 const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
@@ -37,12 +37,12 @@ const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     try {
         const room = yield models_1.ChatRoom.findOne({ where: { roomId: req.params.id } });
         if (!room) {
-            return res.send("존재하지 않는 방입니다.");
+            return res.send("notExist");
         }
         const io = req.app.get("io");
         const { rooms } = io.of("/chat").adapter;
         if (room.max <= ((_c = rooms.get(req.params.id)) === null || _c === void 0 ? void 0 : _c.size)) {
-            return res.send("방이 꽉 찼습니다.");
+            return res.send("full");
         }
         const chat = yield models_1.Chat.findAll({
             where: { ChatRoomRoomId: req.params.id },
@@ -70,21 +70,20 @@ const removeRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.removeRoom = removeRoom;
-const sendChat = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const roomId = parseInt(req.params.id);
-        const chat = yield models_1.Chat.create({
-            ChatRoomRoomId: roomId,
-            user: req.body.user,
-            message: req.body.message,
-        });
-        console.log("sendChat컨트롤러에서 chat임", chat);
-        req.app.get("io").of("/chat").to(roomId).emit("chat", chat);
-        res.end();
-    }
-    catch (error) {
-        console.error(error);
-        next(error);
-    }
-});
-exports.sendChat = sendChat;
+/*
+export const sendChat: RequestHandler = async (req, res, next) => {
+  try {
+    const roomId = parseInt(req.params.id);
+    const chat = await Chat.create({
+      ChatRoomRoomId: roomId,
+      user: req.body.user,
+      message: req.body.message,
+    });
+    console.log("sendChat컨트롤러에서 chat임", chat);
+    req.app.get("io").of("/chat").to(roomId).emit("chat", chat);
+    res.end();
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};*/

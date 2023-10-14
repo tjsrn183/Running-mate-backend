@@ -20,6 +20,7 @@ const socketFunc = (server, app) => {
             credentials: true,
             methods: ["GET", "POST"],
         },
+        allowEIO3: true,
     });
     app.set("io", io);
     const room = io.of("/room");
@@ -34,7 +35,9 @@ const socketFunc = (server, app) => {
         const username = socket.handshake.query.username;
         console.log("username임", username);
         console.log("chat 접속");
+        console.log("socket.id임", socket.id);
         socket.on("join", (data) => {
+            console.log("join이벤트 실행됨");
             socket.join(data);
             socket.to(data).emit("join", {
                 user: "system",
@@ -42,15 +45,21 @@ const socketFunc = (server, app) => {
             });
         });
         //
-        socket.on("message", (data) => {
-            const chat = models_1.Chat.create({
+        socket.on("message", (data) => __awaiter(void 0, void 0, void 0, function* () {
+            const chat = yield models_1.Chat.create({
                 ChatRoomRoomId: data.roomId,
                 user: data.user,
                 message: data.message,
             });
-            console.log("sendChat컨트롤러에서 chat임", chat);
-            socket.to(data.roomId).emit("chat", chat);
-        });
+            console.log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+            const chatData = {
+                user: data.user,
+                message: data.message,
+            };
+            console.log("sendChat컨트롤러에서 chat임", chatData);
+            console.log("DATA에서 룸아이디임", data.roomId);
+            socket.to(data.roomId).emit("chat", chatData);
+        }));
         //
         socket.on("leave", (roomId) => __awaiter(void 0, void 0, void 0, function* () {
             const roomIdString = roomId.toString();
