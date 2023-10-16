@@ -50,7 +50,7 @@ class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
     );
   }
   static associate() {
-    Chat.belongsTo(ChatRoom);
+    Chat.belongsTo(ChatRoom, { onDelete: "cascade" });
   }
 }
 

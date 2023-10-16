@@ -61,7 +61,7 @@ class Run extends Model<InferAttributes<Run>, InferCreationAttributes<Run>> {
     );
   }
   static associate() {
-    Run.belongsTo(User);
+    Run.belongsTo(User, { onDelete: "cascade" });
     Run.hasOne(ChatRoom);
   }
 }

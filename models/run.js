@@ -62,7 +62,7 @@ class Run extends sequelize_1.Model {
         });
     }
     static associate() {
-        Run.belongsTo(user_1.default);
+        Run.belongsTo(user_1.default, { onDelete: "cascade" });
         Run.hasOne(chatRoom_1.default);
     }
 }

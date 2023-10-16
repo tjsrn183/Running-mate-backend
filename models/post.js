@@ -62,7 +62,7 @@ class Post extends sequelize_1.Model {
         });
     }
     static associate() {
-        Post.belongsTo(user_1.default);
+        Post.belongsTo(user_1.default, { onDelete: "cascade" });
     }
 }
 exports.default = Post;

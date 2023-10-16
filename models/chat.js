@@ -62,7 +62,7 @@ class Chat extends sequelize_1.Model {
         });
     }
     static associate() {
-        Chat.belongsTo(chatRoom_1.default);
+        Chat.belongsTo(chatRoom_1.default, { onDelete: "cascade" });
     }
 }
 exports.default = Chat;

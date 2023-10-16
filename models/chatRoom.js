@@ -67,9 +67,9 @@ class ChatRoom extends sequelize_1.Model {
         });
     }
     static associate() {
-        ChatRoom.belongsTo(user_1.default);
+        ChatRoom.belongsTo(user_1.default, { onDelete: "cascade" });
         ChatRoom.hasOne(chat_1.default);
-        ChatRoom.belongsTo(run_1.default);
+        ChatRoom.belongsTo(run_1.default, { onDelete: "cascade" });
     }
 }
 exports.default = ChatRoom;

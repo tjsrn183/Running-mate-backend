@@ -60,9 +60,9 @@ class ChatRoom extends Model<
     );
   }
   static associate() {
-    ChatRoom.belongsTo(User);
+    ChatRoom.belongsTo(User, { onDelete: "cascade" });
     ChatRoom.hasOne(Chat);
-    ChatRoom.belongsTo(Run);
+    ChatRoom.belongsTo(Run, { onDelete: "cascade" });
   }
 }
 

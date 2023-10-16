@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.socketFunc = void 0;
 const socket_io_1 = require("socket.io");
-const services_1 = require("./services");
 const models_1 = require("./models");
 const socketFunc = (server, app) => {
     const io = new socket_io_1.Server(server, {
@@ -23,15 +22,15 @@ const socketFunc = (server, app) => {
         allowEIO3: true,
     });
     app.set("io", io);
-    const room = io.of("/room");
-    const chat = io.of("/chat");
-    room.on("connection", (socket) => {
+    const roomIO = io.of("/room");
+    const chatIO = io.of("/chat");
+    roomIO.on("connection", (socket) => {
         console.log("room 접속");
         socket.on("disconnect", () => {
             console.log("room 접속 해제");
         });
     });
-    chat.on("connection", (socket) => {
+    chatIO.on("connection", (socket) => {
         const username = socket.handshake.query.username;
         console.log("username임", username);
         console.log("chat 접속");
@@ -46,39 +45,43 @@ const socketFunc = (server, app) => {
         });
         //
         socket.on("message", (data) => __awaiter(void 0, void 0, void 0, function* () {
+            const chatData = {
+                user: data.user,
+                message: data.message,
+            };
+            socket.to(data.roomId).emit("chat", chatData);
             const chat = yield models_1.Chat.create({
                 ChatRoomRoomId: data.roomId,
                 user: data.user,
                 message: data.message,
             });
             console.log("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-            const chatData = {
-                user: data.user,
-                message: data.message,
-            };
             console.log("sendChat컨트롤러에서 chat임", chatData);
             console.log("DATA에서 룸아이디임", data.roomId);
-            socket.to(data.roomId).emit("chat", chatData);
         }));
+        const Interval = setInterval(() => {
+            socket.emit("ping");
+        }, 20000);
         //
-        socket.on("leave", (roomId) => __awaiter(void 0, void 0, void 0, function* () {
-            const roomIdString = roomId.toString();
+        socket.on("disconnect", (roomId) => __awaiter(void 0, void 0, void 0, function* () {
+            clearInterval(Interval);
+            socket.to(roomId).emit("leave", {
+                user: "system",
+                chat: `${username}님이 퇴장하셨습니다.`,
+            });
             console.log("chat네임스페이스 연결해제");
-            const { referer } = socket.request.headers;
-            console.log("referer이다", referer);
-            const currentRoom = chat.adapter.rooms.get(roomIdString);
-            const userCount = (currentRoom === null || currentRoom === void 0 ? void 0 : currentRoom.size) || 0;
+            /*  const currentRoom = chatIO.adapter.rooms.get(roomId);
+             const userCount = currentRoom?.size || 0;
             if (userCount === 0) {
-                yield (0, services_1.removeRoom)(roomIdString);
-                room.emit("removeRoom", roomId);
-                console.log("방 삭제요청 성공");
-            }
-            else {
-                socket.to(roomId).emit("exit", {
-                    user: "system",
-                    chat: `${username}님이 퇴장하셨습니다.`,
-                });
-            }
+            await removeRoom(roomId);
+              roomIO.emit("removeRoom", roomId);
+             console.log("방 삭제요청 성공");
+             } else {
+              socket.to(roomId).emit("exit", {
+                user: "system",
+               chat: `${username}님이 퇴장하셨습니다.`,
+              });
+            } */
         }));
     });
 };

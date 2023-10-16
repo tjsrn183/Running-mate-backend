@@ -53,7 +53,7 @@ class Post extends Model<InferAttributes<Post>, InferCreationAttributes<Post>> {
     );
   }
   static associate() {
-    Post.belongsTo(User);
+    Post.belongsTo(User, { onDelete: "cascade" });
   }
 }
 export default Post;
