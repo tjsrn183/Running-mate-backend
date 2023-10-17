@@ -43,9 +43,10 @@ export const socketFunc = (server: http.Server, app: any) => {
         user: data.user,
         message: data.message,
       };
+
       socket.to(data.roomId).emit("chat", chatData);
       const chat = await Chat.create({
-        ChatRoomRoomId: data.roomId,
+        ChatRoomRoomId: parseInt(data.roomId),
         user: data.user,
         message: data.message,
       });
@@ -62,13 +63,12 @@ export const socketFunc = (server: http.Server, app: any) => {
     }, 20000);
 
     //
-    socket.on("disconnect", async (roomId: string) => {
+    socket.on("disconnect", () => {
       clearInterval(Interval);
-      socket.to(roomId).emit("leave", {
-        user: "system",
-        chat: `${username}님이 퇴장하셨습니다.`,
-      });
+
       console.log("chat네임스페이스 연결해제");
+
+      console.log("disconnect 이벤트 실행됨");
 
       /*  const currentRoom = chatIO.adapter.rooms.get(roomId);
        const userCount = currentRoom?.size || 0;

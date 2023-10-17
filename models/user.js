@@ -94,9 +94,9 @@ class User extends sequelize_1.Model {
         });
     }
     static associate() {
-        User.hasMany(post_1.default);
-        User.hasMany(run_1.default);
-        User.hasMany(chatRoom_1.default);
+        User.hasMany(post_1.default, { onDelete: "cascade" });
+        User.hasMany(run_1.default, { onDelete: "cascade" });
+        User.hasMany(chatRoom_1.default, { onDelete: "cascade" });
     }
 }
 exports.default = User;

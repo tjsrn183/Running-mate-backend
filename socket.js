@@ -51,7 +51,7 @@ const socketFunc = (server, app) => {
             };
             socket.to(data.roomId).emit("chat", chatData);
             const chat = yield models_1.Chat.create({
-                ChatRoomRoomId: data.roomId,
+                ChatRoomRoomId: parseInt(data.roomId),
                 user: data.user,
                 message: data.message,
             });
@@ -63,13 +63,10 @@ const socketFunc = (server, app) => {
             socket.emit("ping");
         }, 20000);
         //
-        socket.on("disconnect", (roomId) => __awaiter(void 0, void 0, void 0, function* () {
+        socket.on("disconnect", () => {
             clearInterval(Interval);
-            socket.to(roomId).emit("leave", {
-                user: "system",
-                chat: `${username}님이 퇴장하셨습니다.`,
-            });
             console.log("chat네임스페이스 연결해제");
+            console.log("disconnect 이벤트 실행됨");
             /*  const currentRoom = chatIO.adapter.rooms.get(roomId);
              const userCount = currentRoom?.size || 0;
             if (userCount === 0) {
@@ -82,7 +79,7 @@ const socketFunc = (server, app) => {
                chat: `${username}님이 퇴장하셨습니다.`,
               });
             } */
-        }));
+        });
     });
 };
 exports.socketFunc = socketFunc;

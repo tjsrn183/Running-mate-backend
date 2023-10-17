@@ -91,9 +91,9 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     );
   }
   static associate() {
-    User.hasMany(Post);
-    User.hasMany(Run);
-    User.hasMany(ChatRoom);
+    User.hasMany(Post, { onDelete: "cascade" });
+    User.hasMany(Run, { onDelete: "cascade" });
+    User.hasMany(ChatRoom, { onDelete: "cascade" });
   }
 }
 
