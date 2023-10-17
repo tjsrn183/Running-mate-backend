@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeRoom = exports.enterRoom = exports.createChatRoom = void 0;
+exports.enterRoom = exports.createChatRoom = void 0;
 const models_1 = require("../models");
 const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
@@ -58,18 +58,16 @@ const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.enterRoom = enterRoom;
-const removeRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield models_1.ChatRoom.destroy({ where: { roomId: req.params.id } });
-        yield models_1.Chat.destroy({ where: { ChatRoomRoomId: req.params.id } });
-        res.end();
-    }
-    catch (error) {
-        console.error(error);
-        next(error);
-    }
-});
-exports.removeRoom = removeRoom;
+/*export const removeRoom: RequestHandler = async (req, res, next) => {
+  try {
+    await ChatRoom.destroy({ where: { roomId: req.params.id } });
+    await Chat.destroy({ where: { ChatRoomRoomId: req.params.id } });
+    res.end();
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};*/
 /*
 export const sendChat: RequestHandler = async (req, res, next) => {
   try {

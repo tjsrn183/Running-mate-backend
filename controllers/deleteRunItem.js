@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteRunItem = void 0;
 const models_1 = require("../models");
-const services_1 = require("../services");
 const deleteRunItem = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const runItemIdNum = parseInt(req.params.runItemId);
     try {
@@ -20,7 +19,7 @@ const deleteRunItem = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                 runItemId: runItemIdNum,
             },
         });
-        yield (0, services_1.removeRoom)(runItemIdNum);
+        // await removeRoom(runItemIdNum);
         res.end();
     }
     catch (error) {
