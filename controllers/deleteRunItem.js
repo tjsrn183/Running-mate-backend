@@ -19,7 +19,6 @@ const deleteRunItem = (req, res, next) => __awaiter(void 0, void 0, void 0, func
                 runItemId: runItemIdNum,
             },
         });
-        // await removeRoom(runItemIdNum);
         res.end();
     }
     catch (error) {

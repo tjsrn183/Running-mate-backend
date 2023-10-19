@@ -23,11 +23,20 @@ const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                 "startLocationNaturalLan",
                 "endLocationNaturalLan",
                 "runItemId",
+                "body",
             ],
             order: [["createdAt", "DESC"]],
         });
-        console.log("getRunItemList에 runItem", getRunItemListFunc);
-        res.json(getRunItemListFunc);
+        const ItemList = getRunItemListFunc.map((runItem) => {
+            const body = runItem.dataValues.body;
+            const regex = /<img[^>]+src="http([^">]+)/g;
+            const matches = body.match(regex);
+            return Object.assign(Object.assign({}, runItem.dataValues), { body: matches
+                    ? matches[0]
+                    : "http://localhost:8000/uploads/defaultImg.jpg" });
+        });
+        console.log("getRunItemList에 runItem", ItemList);
+        res.json(ItemList);
         res.end();
     }
     catch (error) {

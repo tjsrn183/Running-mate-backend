@@ -58,30 +58,3 @@ const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.enterRoom = enterRoom;
-/*export const removeRoom: RequestHandler = async (req, res, next) => {
-  try {
-    await ChatRoom.destroy({ where: { roomId: req.params.id } });
-    await Chat.destroy({ where: { ChatRoomRoomId: req.params.id } });
-    res.end();
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-};*/
-/*
-export const sendChat: RequestHandler = async (req, res, next) => {
-  try {
-    const roomId = parseInt(req.params.id);
-    const chat = await Chat.create({
-      ChatRoomRoomId: roomId,
-      user: req.body.user,
-      message: req.body.message,
-    });
-    console.log("sendChat컨트롤러에서 chat임", chat);
-    req.app.get("io").of("/chat").to(roomId).emit("chat", chat);
-    res.end();
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-};*/
