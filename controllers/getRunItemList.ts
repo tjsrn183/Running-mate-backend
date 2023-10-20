@@ -14,17 +14,23 @@ export const getRunItemList: RequestHandler = async (req, res, next) => {
         "endLocationNaturalLan",
         "runItemId",
         "body",
+        "date",
       ],
       order: [["createdAt", "DESC"]],
     });
 
     const ItemList = getRunItemListFunc.map((runItem) => {
       const body = runItem.dataValues.body;
-      const regex = /(<img[^>]*srcWs*=Ws*[₩"']?([^>₩"']+)[₩"']?[^>]*>)/g;
+      const regex = /<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
 
       const matches = body.match(regex);
+      if (matches) {
+        const startIndex = matches[0].indexOf("=");
+        const lastIndex = matches[0].indexOf(">");
+        matches[0] = matches[0].substring(startIndex + 2, lastIndex - 1);
+      }
 
-      console.log("getRunItemList에 matches", matches);
+      console.log("getRunItemList에 matches", matches ? matches[0] : null);
       return {
         ...runItem.dataValues,
         thumbnail: matches

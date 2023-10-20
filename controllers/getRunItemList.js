@@ -24,14 +24,20 @@ const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                 "endLocationNaturalLan",
                 "runItemId",
                 "body",
+                "date",
             ],
             order: [["createdAt", "DESC"]],
         });
         const ItemList = getRunItemListFunc.map((runItem) => {
             const body = runItem.dataValues.body;
-            const regex = /(<img[^>]*srcWs*=Ws*[₩"']?([^>₩"']+)[₩"']?[^>]*>)/g;
+            const regex = /<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
             const matches = body.match(regex);
-            console.log("getRunItemList에 matches", matches);
+            if (matches) {
+                const startIndex = matches[0].indexOf("=");
+                const lastIndex = matches[0].indexOf(">");
+                matches[0] = matches[0].substring(startIndex + 2, lastIndex - 1);
+            }
+            console.log("getRunItemList에 matches", matches ? matches[0] : null);
             return Object.assign(Object.assign({}, runItem.dataValues), { thumbnail: matches
                     ? matches[0]
                     : "http://localhost:8000/uploads/defaultImg.jpg" });
