@@ -29,9 +29,10 @@ const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         });
         const ItemList = getRunItemListFunc.map((runItem) => {
             const body = runItem.dataValues.body;
-            const regex = /<img[^>]+src="http([^">]+)/g;
+            const regex = /(<img[^>]*srcWs*=Ws*[₩"']?([^>₩"']+)[₩"']?[^>]*>)/g;
             const matches = body.match(regex);
-            return Object.assign(Object.assign({}, runItem.dataValues), { body: matches
+            console.log("getRunItemList에 matches", matches);
+            return Object.assign(Object.assign({}, runItem.dataValues), { thumbnail: matches
                     ? matches[0]
                     : "http://localhost:8000/uploads/defaultImg.jpg" });
         });

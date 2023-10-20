@@ -1,6 +1,6 @@
 import SocketIO, { Server } from "socket.io";
 import http from "http";
-import { removeRoom } from "./services";
+
 import { Chat } from "./models";
 
 export const socketFunc = (server: http.Server, app: any) => {
