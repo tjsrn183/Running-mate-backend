@@ -2,6 +2,11 @@ import { Run } from "../models";
 import { RequestHandler } from "express";
 
 export const getRunItemList: RequestHandler = async (req, res, next) => {
+  let pageNum = parseInt(req.params.pageNum);
+  let offset = 0;
+  if (pageNum > 1) {
+    offset = 10 * (pageNum - 1);
+  }
   try {
     const getRunItemListFunc = await Run.findAll({
       attributes: [
@@ -17,6 +22,8 @@ export const getRunItemList: RequestHandler = async (req, res, next) => {
         "date",
       ],
       order: [["createdAt", "DESC"]],
+      offset: offset,
+      limit: 10,
     });
 
     const ItemList = getRunItemListFunc.map((runItem) => {

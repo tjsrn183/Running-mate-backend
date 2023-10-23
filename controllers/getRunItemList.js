@@ -12,6 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRunItemList = void 0;
 const models_1 = require("../models");
 const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let pageNum = parseInt(req.params.pageNum);
+    let offset = 0;
+    if (pageNum > 1) {
+        offset = 10 * (pageNum - 1);
+    }
     try {
         const getRunItemListFunc = yield models_1.Run.findAll({
             attributes: [
@@ -27,6 +32,8 @@ const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                 "date",
             ],
             order: [["createdAt", "DESC"]],
+            offset: offset,
+            limit: 10,
         });
         const ItemList = getRunItemListFunc.map((runItem) => {
             const body = runItem.dataValues.body;

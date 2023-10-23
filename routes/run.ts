@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/register", isLoggedIn, uploadRunItem);
 router.get("/:runItemId", isLoggedIn, getRunItem);
-router.get("/list/:mock", getRunItemList);
+router.get("/list/:pageNum", getRunItemList);
 router.delete("/delete/:runItemId", isLoggedIn, deleteRunItem);
 export default router;
