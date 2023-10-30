@@ -25,7 +25,8 @@ export const getRunItemList: RequestHandler = async (req, res, next) => {
       offset: offset,
       limit: 10,
     });
-
+    const countItem = await Run.count();
+    console.log("getRunItemList에 countItem", countItem);
     const ItemList = getRunItemListFunc.map((runItem) => {
       const body = runItem.dataValues.body;
       const regex = /<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
@@ -40,6 +41,7 @@ export const getRunItemList: RequestHandler = async (req, res, next) => {
       console.log("getRunItemList에 matches", matches ? matches[0] : null);
       return {
         ...runItem.dataValues,
+
         thumbnail: matches
           ? matches[0]
           : "http://localhost:8000/uploads/defaultImg.jpg",
@@ -47,7 +49,7 @@ export const getRunItemList: RequestHandler = async (req, res, next) => {
     });
 
     console.log("getRunItemList에 runItem", ItemList);
-    res.json(ItemList);
+    res.json({ ItemList, totalPage: Math.ceil(countItem / 10), countItem });
     res.end();
   } catch (error) {
     console.log(error);

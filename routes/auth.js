@@ -30,6 +30,7 @@ router.get("/kakao/callback", passport_1.default.authenticate("kakao", {
 router.get("/userinfo", middlewares_1.isLoggedIn, (req, res) => {
     if (req.user) {
         res.json({ user: req.user });
+        console.log("userinfo에서 req.user", req.user);
     }
     else {
         res.json({

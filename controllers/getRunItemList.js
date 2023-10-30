@@ -35,6 +35,8 @@ const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             offset: offset,
             limit: 10,
         });
+        const countItem = yield models_1.Run.count();
+        console.log("getRunItemList에 countItem", countItem);
         const ItemList = getRunItemListFunc.map((runItem) => {
             const body = runItem.dataValues.body;
             const regex = /<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/g;
@@ -50,7 +52,7 @@ const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                     : "http://localhost:8000/uploads/defaultImg.jpg" });
         });
         console.log("getRunItemList에 runItem", ItemList);
-        res.json(ItemList);
+        res.json({ ItemList, totalPage: Math.ceil(countItem / 10), countItem });
         res.end();
     }
     catch (error) {

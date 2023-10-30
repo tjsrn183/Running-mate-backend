@@ -27,6 +27,7 @@ router.get(
 router.get("/userinfo", isLoggedIn, (req, res) => {
   if (req.user) {
     res.json({ user: req.user });
+    console.log("userinfo에서 req.user", req.user);
   } else {
     res.json({
       message: "사용자가 로그인되어 있지 않습니다.3트",
