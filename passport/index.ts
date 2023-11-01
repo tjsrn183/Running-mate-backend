@@ -1,6 +1,7 @@
 import passport from "passport";
 import kakao from "./kakaoStrategy";
 import User from "../models/user";
+import local from "./localStrategy";
 
 interface userSession {
   id: number;
@@ -8,7 +9,8 @@ interface userSession {
 }
 export default () => {
   passport.serializeUser((data: any, done) => {
-    console.log("시리알라이즈 실행됨");
+    console.log("시리알라이즈 실행됨data다", data);
+
     done(null, { id: data.user.id, accessToken: data.accessToken });
   });
 
@@ -23,4 +25,5 @@ export default () => {
   });
 
   kakao();
+  local();
 };

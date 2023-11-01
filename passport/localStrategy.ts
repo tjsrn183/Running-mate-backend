@@ -12,6 +12,7 @@ export default () => {
       },
       async (id, password, done) => {
         try {
+          console.log("locastrategy 첫줄");
           const exUser: any = await User.findOne({
             where: { user_id: id },
           });
@@ -19,7 +20,10 @@ export default () => {
           if (exUser) {
             const result = await bcrypt.compare(password, exUser.password);
             if (result) {
-              done(null, exUser);
+              const userData = {
+                user: exUser,
+              };
+              done(null, userData);
             } else {
               done(null, false, { message: "비밀번호가 일치하지 않습니다." });
             }

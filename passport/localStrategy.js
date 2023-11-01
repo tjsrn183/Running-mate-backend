@@ -22,6 +22,7 @@ exports.default = () => {
         passwordField: "password",
     }, (id, password, done) => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            console.log("locastrategy 첫줄");
             const exUser = yield user_1.default.findOne({
                 where: { user_id: id },
             });
@@ -29,7 +30,10 @@ exports.default = () => {
             if (exUser) {
                 const result = yield bcrypt_1.default.compare(password, exUser.password);
                 if (result) {
-                    done(null, exUser);
+                    const userData = {
+                        user: exUser,
+                    };
+                    done(null, userData);
                 }
                 else {
                     done(null, false, { message: "비밀번호가 일치하지 않습니다." });

@@ -46,6 +46,7 @@ const login = (req, res, next) => {
         console.log("authError, user,info 타입수정해라", authError, user, info);
         if (authError) {
             console.error(authError);
+            res.send([]);
             return next(authError);
         }
         if (!user) {
@@ -54,6 +55,7 @@ const login = (req, res, next) => {
         return req.login(user, (loginError) => {
             if (loginError) {
                 console.error(loginError);
+                res.send([]);
                 return next(loginError);
             }
             res.json({ message: "로그인 성공" });
