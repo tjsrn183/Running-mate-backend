@@ -8,6 +8,7 @@ const kakaoStrategy_1 = __importDefault(require("./kakaoStrategy"));
 const user_1 = __importDefault(require("../models/user"));
 exports.default = () => {
     passport_1.default.serializeUser((data, done) => {
+        console.log("시리알라이즈 실행됨");
         done(null, { id: data.user.id, accessToken: data.accessToken });
     });
     passport_1.default.deserializeUser((user, done) => {

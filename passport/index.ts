@@ -8,6 +8,7 @@ interface userSession {
 }
 export default () => {
   passport.serializeUser((data: any, done) => {
+    console.log("시리알라이즈 실행됨");
     done(null, { id: data.user.id, accessToken: data.accessToken });
   });
 

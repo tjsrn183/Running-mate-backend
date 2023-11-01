@@ -7,13 +7,13 @@ export default () => {
   passport.use(
     new LocalStrategy(
       {
-        usernameField: "userId",
+        usernameField: "id",
         passwordField: "password",
       },
-      async (userId, password, done) => {
+      async (id, password, done) => {
         try {
           const exUser: any = await User.findOne({
-            where: { user_id: userId },
+            where: { user_id: id },
           });
           console.log("exUser타입 재설정해라", exUser);
           if (exUser) {

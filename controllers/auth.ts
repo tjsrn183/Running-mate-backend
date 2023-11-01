@@ -9,7 +9,7 @@ const join: RequestHandler = async (req, res, next) => {
     const exUser = await User.findOne({ where: { user_id: id } });
     if (exUser) {
       res.json({ message: "이미 가입된 아이디입니다." });
-      res.end;
+      res.end();
     }
     const hash = await bcrypt.hash(password, 12);
     await User.create({
@@ -19,7 +19,8 @@ const join: RequestHandler = async (req, res, next) => {
       provider: "local",
     });
     res.json({ message: "회원가입 성공" });
-    res.end;
+    console.log("이게 실행이되나요");
+    res.end();
   } catch (error) {
     console.error(error);
     return next(error);
@@ -34,14 +35,15 @@ const login: RequestHandler = (req, res, next) => {
       return next(authError);
     }
     if (!user) {
-      return res.status(401).send(info.message);
+      return res.json({ message: info.message });
     }
     return req.login(user, (loginError) => {
       if (loginError) {
         console.error(loginError);
         return next(loginError);
       }
-      return res.json({ message: "로그인 성공" });
+      res.json({ message: "로그인 성공" });
+      res.end();
     });
   })(req, res, next);
 };

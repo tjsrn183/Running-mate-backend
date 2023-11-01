@@ -22,7 +22,7 @@ const join = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
         const exUser = yield user_1.default.findOne({ where: { user_id: id } });
         if (exUser) {
             res.json({ message: "이미 가입된 아이디입니다." });
-            res.end;
+            res.end();
         }
         const hash = yield bcrypt_1.default.hash(password, 12);
         yield user_1.default.create({
@@ -32,7 +32,8 @@ const join = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
             provider: "local",
         });
         res.json({ message: "회원가입 성공" });
-        res.end;
+        console.log("이게 실행이되나요");
+        res.end();
     }
     catch (error) {
         console.error(error);
@@ -48,14 +49,15 @@ const login = (req, res, next) => {
             return next(authError);
         }
         if (!user) {
-            return res.status(401).send(info.message);
+            return res.json({ message: info.message });
         }
         return req.login(user, (loginError) => {
             if (loginError) {
                 console.error(loginError);
                 return next(loginError);
             }
-            return res.json({ message: "로그인 성공" });
+            res.json({ message: "로그인 성공" });
+            res.end();
         });
     })(req, res, next);
 };

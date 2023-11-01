@@ -18,12 +18,12 @@ const user_1 = __importDefault(require("../models/user"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 exports.default = () => {
     passport_1.default.use(new passport_local_1.Strategy({
-        usernameField: "userId",
+        usernameField: "id",
         passwordField: "password",
-    }, (userId, password, done) => __awaiter(void 0, void 0, void 0, function* () {
+    }, (id, password, done) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const exUser = yield user_1.default.findOne({
-                where: { user_id: userId },
+                where: { user_id: id },
             });
             console.log("exUser타입 재설정해라", exUser);
             if (exUser) {
