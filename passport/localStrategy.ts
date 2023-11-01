@@ -12,7 +12,10 @@ export default () => {
       },
       async (userId, password, done) => {
         try {
-          const exUser = await User.findOne({ where: { user_id: userId } });
+          const exUser: any = await User.findOne({
+            where: { user_id: userId },
+          });
+          console.log("exUser타입 재설정해라", exUser);
           if (exUser) {
             const result = await bcrypt.compare(password, exUser.password);
             if (result) {
