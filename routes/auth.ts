@@ -4,6 +4,7 @@ import axios from "axios";
 import { isLoggedIn, isNotLoggedIn } from "../middlewares";
 
 import { RequestHandler } from "express";
+import { join, login } from "../controllers/auth";
 
 const router = express.Router();
 
@@ -59,5 +60,8 @@ router.post("/kakao/logout", async (req, res) => {
     res.json(error);
   }
 });
+
+router.post("/join", isNotLoggedIn, join);
+router.post("/login", isNotLoggedIn, login);
 
 export default router;

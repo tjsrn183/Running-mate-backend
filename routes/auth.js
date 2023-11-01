@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const passport_1 = __importDefault(require("passport"));
 const axios_1 = __importDefault(require("axios"));
 const middlewares_1 = require("../middlewares");
+const auth_1 = require("../controllers/auth");
 const router = express_1.default.Router();
 router.use((req, res, next) => {
     res.locals.user = req.user;
@@ -62,4 +63,6 @@ router.post("/kakao/logout", (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.json(error);
     }
 }));
+router.post("/join", middlewares_1.isNotLoggedIn, auth_1.join);
+router.post("/login", middlewares_1.isNotLoggedIn, auth_1.login);
 exports.default = router;
