@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import User from "../models/user";
 import { RequestHandler } from "express";
+import axios from "axios";
 
 const join: RequestHandler = async (req, res, next) => {
   const { nick, id, password } = req.body;
@@ -49,12 +50,51 @@ const login: RequestHandler = (req, res, next) => {
     });
   })(req, res, next);
 };
-const logout: RequestHandler = (req, res) => {
-  req.logout(() => {
-    req.session.destroy(() => {
-      res.clearCookie("connect.sid");
-      res.end();
+
+const logout: RequestHandler = async (req, res) => {
+  try {
+    const ACCESS_TOKEN = res.locals.user.accessToken;
+    console.log("로그아웃 라우터에서 req.user", req.user);
+    console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
+    console.log(
+      "로그아웃 라우터에서 req.user.user.provider",
+      req.user?.user.provider
+    );
+    console.log(
+      "로그아웃 라우터에서 req.user.user.dataValues.provider",
+      req.user?.user.dataValues.provider
+    );
+    if (req.user?.user.provider == "kakao") {
+      await axios({
+        method: "post",
+        url: "https://kapi.kakao.com/v1/user/logout",
+        headers: {
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      });
+    }
+
+    req.logout(() => {
+      req.session.destroy(() => {
+        res.clearCookie("connect.sid");
+        res.end();
+      });
     });
-  });
+  } catch (error) {
+    console.error(error);
+    res.json(error);
+  }
 };
-export { join, login };
+
+const userInfo: RequestHandler = (req, res) => {
+  if (req.user) {
+    res.json({ user: req.user });
+    console.log("userinfo에서 req.user", req.user);
+  } else {
+    res.json({
+      message: "사용자가 로그인되어 있지 않습니다.3트",
+    });
+  }
+};
+
+export { join, login, logout, userInfo };

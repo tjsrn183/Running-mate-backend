@@ -40,17 +40,22 @@ router.get("/userinfo", middlewares_1.isLoggedIn, (req, res) => {
     }
 });
 router.post("/kakao/logout", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b, _c;
     try {
         const ACCESS_TOKEN = res.locals.user.accessToken;
         console.log("로그아웃 라우터에서 req.user", req.user);
         console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
-        yield (0, axios_1.default)({
-            method: "post",
-            url: "https://kapi.kakao.com/v1/user/logout",
-            headers: {
-                Authorization: `Bearer ${ACCESS_TOKEN}`,
-            },
-        });
+        console.log("로그아웃 라우터에서 req.user.user.provider", (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.provider);
+        console.log("로그아웃 라우터에서 req.user.user.dataValues.provider", (_b = req.user) === null || _b === void 0 ? void 0 : _b.user.dataValues.provider);
+        if (((_c = req.user) === null || _c === void 0 ? void 0 : _c.user.provider) == "kakao") {
+            yield (0, axios_1.default)({
+                method: "post",
+                url: "https://kapi.kakao.com/v1/user/logout",
+                headers: {
+                    Authorization: `Bearer ${ACCESS_TOKEN}`,
+                },
+            });
+        }
         req.logout(() => {
             req.session.destroy(() => {
                 res.clearCookie("connect.sid");
