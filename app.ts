@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import session from "express-session";
 import dotenv from "dotenv";
-import pageRouter from "./routes/page";
+
 import { sequelize } from "./models";
 import passportConfig from "./passport";
 import passport from "passport";
@@ -60,7 +60,6 @@ app.use("/auth", authRouter);
 app.use("/post", postRouter);
 app.use("/run", runRouter);
 app.use("/chat", chatRouter);
-app.use("/", pageRouter);
 
 app.use((req, res, next) => {
   try {

@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.join = void 0;
+exports.userInfo = exports.logout = exports.login = exports.join = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const passport_1 = __importDefault(require("passport"));
 const user_1 = __importDefault(require("../models/user"));
+const axios_1 = __importDefault(require("axios"));
 const join = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { nick, id, password } = req.body;
     try {
@@ -64,11 +65,45 @@ const login = (req, res, next) => {
     })(req, res, next);
 };
 exports.login = login;
-const logout = (req, res) => {
-    req.logout(() => {
-        req.session.destroy(() => {
-            res.clearCookie("connect.sid");
-            res.end();
+const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b, _c;
+    try {
+        const ACCESS_TOKEN = res.locals.user.accessToken;
+        console.log("로그아웃 라우터에서 req.user", req.user);
+        console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
+        console.log("로그아웃 라우터에서 req.user.user.provider", (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.provider);
+        console.log("로그아웃 라우터에서 req.user.user.dataValues.provider", (_b = req.user) === null || _b === void 0 ? void 0 : _b.user.dataValues.provider);
+        if (((_c = req.user) === null || _c === void 0 ? void 0 : _c.user.provider) == "kakao") {
+            yield (0, axios_1.default)({
+                method: "post",
+                url: "https://kapi.kakao.com/v1/user/logout",
+                headers: {
+                    Authorization: `Bearer ${ACCESS_TOKEN}`,
+                },
+            });
+        }
+        req.logout(() => {
+            req.session.destroy(() => {
+                res.clearCookie("connect.sid");
+                res.end();
+            });
         });
-    });
+    }
+    catch (error) {
+        console.error(error);
+        res.json(error);
+    }
+});
+exports.logout = logout;
+const userInfo = (req, res) => {
+    if (req.user) {
+        res.json({ user: req.user });
+        console.log("userinfo에서 req.user", req.user);
+    }
+    else {
+        res.json({
+            message: "사용자가 로그인되어 있지 않습니다.3트",
+        });
+    }
 };
+exports.userInfo = userInfo;

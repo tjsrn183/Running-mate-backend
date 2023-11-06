@@ -8,7 +8,6 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const express_session_1 = __importDefault(require("express-session"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const page_1 = __importDefault(require("./routes/page"));
 const models_1 = require("./models");
 const passport_1 = __importDefault(require("./passport"));
 const passport_2 = __importDefault(require("passport"));
@@ -58,7 +57,6 @@ app.use("/auth", auth_1.default);
 app.use("/post", post_1.default);
 app.use("/run", run_1.default);
 app.use("/chat", chat_1.default);
-app.use("/", page_1.default);
 app.use((req, res, next) => {
     try {
         const error = new Error(`${req.method} ${req.url}라우터가 없습니다.`);
