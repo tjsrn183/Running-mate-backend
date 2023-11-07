@@ -9,9 +9,6 @@ interface postType {
     createdAt: string;
     body: string;
   };
-  User: {
-    dataValues: any;
-  };
 }
 
 const sanitizefunc = (body: string) => {

@@ -13,7 +13,7 @@ export default () => {
       async (id, password, done) => {
         try {
           console.log("locastrategy 첫줄");
-          const exUser: any = await User.findOne({
+          const exUser: User | null = await User.findOne({
             where: { user_id: id },
           });
           console.log("exUser타입 재설정해라", exUser);
