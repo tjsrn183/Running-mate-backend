@@ -4,5 +4,8 @@ declare global {
     interface User extends IUser {
       user;
     }
+    interface AuthInfo {
+      message: string;
+    }
   }
 }

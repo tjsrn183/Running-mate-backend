@@ -29,26 +29,34 @@ const join: RequestHandler = async (req, res, next) => {
 };
 
 const login: RequestHandler = (req, res, next) => {
-  passport.authenticate("local", (authError: any, user: any, info: any) => {
-    console.log("authError, user,info 타입수정해라", authError, user, info);
-    if (authError) {
-      console.error(authError);
-      res.send([]);
-      return next(authError);
-    }
-    if (!user) {
-      return res.json({ message: info.message });
-    }
-    return req.login(user, (loginError) => {
-      if (loginError) {
-        console.error(loginError);
+  passport.authenticate(
+    "local",
+    (authError: Error, user: Express.User, authInfo: Express.AuthInfo) => {
+      console.log(
+        "authError, user,info 타입수정해라",
+        authError,
+        user,
+        authInfo
+      );
+      if (authError) {
+        console.error(authError);
         res.send([]);
-        return next(loginError);
+        return next(authError);
       }
-      res.json({ message: "로그인 성공" });
-      res.end();
-    });
-  })(req, res, next);
+      if (!user) {
+        return res.json({ message: authInfo.message });
+      }
+      return req.login(user, (loginError) => {
+        if (loginError) {
+          console.error(loginError);
+          res.send([]);
+          return next(loginError);
+        }
+        res.json({ message: "로그인 성공" });
+        res.end();
+      });
+    }
+  )(req, res, next);
 };
 
 const logout: RequestHandler = async (req, res) => {

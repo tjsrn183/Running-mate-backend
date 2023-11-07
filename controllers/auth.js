@@ -43,15 +43,15 @@ const join = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.join = join;
 const login = (req, res, next) => {
-    passport_1.default.authenticate("local", (authError, user, info) => {
-        console.log("authError, user,info 타입수정해라", authError, user, info);
+    passport_1.default.authenticate("local", (authError, user, authInfo) => {
+        console.log("authError, user,info 타입수정해라", authError, user, authInfo);
         if (authError) {
             console.error(authError);
             res.send([]);
             return next(authError);
         }
         if (!user) {
-            return res.json({ message: info.message });
+            return res.json({ message: authInfo.message });
         }
         return req.login(user, (loginError) => {
             if (loginError) {
