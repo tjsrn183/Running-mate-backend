@@ -4,8 +4,9 @@ import Post from "./post";
 import Run from "./run";
 import ChatRoom from "./chatRoom";
 import Chat from "./chat";
+import configObj from "../config/config";
 const env = (process.env.NODE_ENV as "production" | "test") || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+const config = configObj[env];
 
 export const sequelize = new Sequelize.Sequelize(
   config.database,

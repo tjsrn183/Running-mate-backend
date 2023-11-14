@@ -41,6 +41,7 @@ const sessionMiddleware = app.use(
       httpOnly: true,
       secure: false,
     },
+    proxy: true,
   })
 );
 

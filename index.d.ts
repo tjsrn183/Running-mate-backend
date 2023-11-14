@@ -9,4 +9,9 @@ declare global {
       message: string;
     }
   }
+  namespace NodeJS {
+    interface ProcessEnv {
+      SEQUELIZE_PASSWORD: string;
+    }
+  }
 }
