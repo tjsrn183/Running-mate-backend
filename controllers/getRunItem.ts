@@ -9,7 +9,7 @@ export const getRunItem: RequestHandler = async (req, res, next) => {
       where: { runItemId: req.params.runItemId },
       include: { model: ChatRoom, attributes: ["roomId"] },
     });
-    console.log("getRunItem에 runItem", getRunItemfunc);
+
     res.json(getRunItemfunc);
     res.end();
   } catch (error) {

@@ -10,10 +10,7 @@ export const createChatRoom: RequestHandler = async (req, res, next) => {
       UserId: req.user?.user.dataValues.id,
       RunRunItemId: req.body.runItemId,
     });
-    console.log(
-      "chatControllers에서 실행한 req.user.user.dataValues.id임",
-      req.user?.user.dataValues.id
-    );
+
     const io = req.app.get("io");
     io.of("/room").emit("newRoom", newRoom);
     res.end();
@@ -39,7 +36,7 @@ export const enterRoom: RequestHandler = async (req, res, next) => {
       where: { ChatRoomRoomId: req.params.id },
       order: [["createdAt", "ASC"]],
     });
-    console.log("enterRoom컨트롤러에서 chat임", chat);
+
     res.send(chat);
     res.end();
   } catch (error) {

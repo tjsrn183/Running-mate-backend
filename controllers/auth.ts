@@ -20,7 +20,7 @@ const join: RequestHandler = async (req, res, next) => {
       provider: "local",
     });
     res.json({ message: "회원가입 성공" });
-    console.log("이게 실행이되나요");
+
     res.end();
   } catch (error) {
     console.error(error);
@@ -32,12 +32,6 @@ const login: RequestHandler = (req, res, next) => {
   passport.authenticate(
     "local",
     (authError: Error, user: Express.User, authInfo: Express.AuthInfo) => {
-      console.log(
-        "authError, user,info 타입수정해라",
-        authError,
-        user,
-        authInfo
-      );
       if (authError) {
         console.error(authError);
         res.send([]);
@@ -62,16 +56,7 @@ const login: RequestHandler = (req, res, next) => {
 const logout: RequestHandler = async (req, res) => {
   try {
     const ACCESS_TOKEN = res.locals.user.accessToken;
-    console.log("로그아웃 라우터에서 req.user", req.user);
-    console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
-    console.log(
-      "로그아웃 라우터에서 req.user.user.provider",
-      req.user?.user.provider
-    );
-    console.log(
-      "로그아웃 라우터에서 req.user.user.dataValues.provider",
-      req.user?.user.dataValues.provider
-    );
+
     if (req.user?.user.provider == "kakao") {
       await axios({
         method: "post",
@@ -97,7 +82,6 @@ const logout: RequestHandler = async (req, res) => {
 const userInfo: RequestHandler = (req, res) => {
   if (req.user) {
     res.json({ user: req.user });
-    console.log("userinfo에서 req.user", req.user);
   } else {
     res.json({
       message: "사용자가 로그인되어 있지 않습니다.3트",

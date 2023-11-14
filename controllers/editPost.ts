@@ -14,7 +14,6 @@ export const editPost: RequestHandler = async (req, res, next) => {
         },
       }
     );
-    console.log("editPost에 post", post);
 
     res.end();
   } catch (error) {
