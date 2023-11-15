@@ -33,7 +33,6 @@ const join = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
             provider: "local",
         });
         res.json({ message: "회원가입 성공" });
-        console.log("이게 실행이되나요");
         res.end();
     }
     catch (error) {
@@ -44,7 +43,6 @@ const join = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
 exports.join = join;
 const login = (req, res, next) => {
     passport_1.default.authenticate("local", (authError, user, authInfo) => {
-        console.log("authError, user,info 타입수정해라", authError, user, authInfo);
         if (authError) {
             console.error(authError);
             res.send([]);
@@ -66,14 +64,10 @@ const login = (req, res, next) => {
 };
 exports.login = login;
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
+    var _a;
     try {
         const ACCESS_TOKEN = res.locals.user.accessToken;
-        console.log("로그아웃 라우터에서 req.user", req.user);
-        console.log("로그아웃 라우터에서 엑세스 토큰 찍어봄", ACCESS_TOKEN);
-        console.log("로그아웃 라우터에서 req.user.user.provider", (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.provider);
-        console.log("로그아웃 라우터에서 req.user.user.dataValues.provider", (_b = req.user) === null || _b === void 0 ? void 0 : _b.user.dataValues.provider);
-        if (((_c = req.user) === null || _c === void 0 ? void 0 : _c.user.provider) == "kakao") {
+        if (((_a = req.user) === null || _a === void 0 ? void 0 : _a.user.provider) == "kakao") {
             yield (0, axios_1.default)({
                 method: "post",
                 url: "https://kapi.kakao.com/v1/user/logout",
@@ -98,7 +92,6 @@ exports.logout = logout;
 const userInfo = (req, res) => {
     if (req.user) {
         res.json({ user: req.user });
-        console.log("userinfo에서 req.user", req.user);
     }
     else {
         res.json({

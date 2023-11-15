@@ -18,8 +18,6 @@ const postDelete = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 postId: req.params.postId,
             },
         });
-        console.log("postDelete에 post", post);
-        console.log("postDelete 실행됌");
         res.end();
     }
     catch (error) {

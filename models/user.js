@@ -51,10 +51,6 @@ class User extends sequelize_1.Model {
                 type: sequelize_1.default.STRING(30),
                 allowNull: true,
             },
-            birthday: {
-                type: sequelize_1.default.STRING(10),
-                allowNull: true,
-            },
             nick: {
                 type: sequelize_1.default.STRING(15),
                 allowNull: false,
@@ -66,14 +62,6 @@ class User extends sequelize_1.Model {
             provider: {
                 type: sequelize_1.default.ENUM("local", "kakao"),
                 allowNull: false,
-            },
-            sex: {
-                type: sequelize_1.default.ENUM("male", "female"),
-                allowNull: true,
-            },
-            phoneNumber: {
-                type: sequelize_1.default.STRING(20),
-                allowNull: true,
             },
             snsId: {
                 type: sequelize_1.default.STRING(30),

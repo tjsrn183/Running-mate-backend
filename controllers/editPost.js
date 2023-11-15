@@ -21,7 +21,6 @@ const editPost = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
                 postId: req.params.postId,
             },
         });
-        console.log("editPost에 post", post);
         res.end();
     }
     catch (error) {

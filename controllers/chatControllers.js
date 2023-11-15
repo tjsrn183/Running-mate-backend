@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.enterRoom = exports.createChatRoom = void 0;
 const models_1 = require("../models");
 const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a;
     try {
         const newRoom = yield models_1.ChatRoom.create({
             title: req.body.title,
@@ -21,7 +21,6 @@ const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             UserId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.user.dataValues.id,
             RunRunItemId: req.body.runItemId,
         });
-        console.log("chatControllers에서 실행한 req.user.user.dataValues.id임", (_b = req.user) === null || _b === void 0 ? void 0 : _b.user.dataValues.id);
         const io = req.app.get("io");
         io.of("/room").emit("newRoom", newRoom);
         res.end();
@@ -33,7 +32,7 @@ const createChatRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.createChatRoom = createChatRoom;
 const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c;
+    var _b;
     try {
         const room = yield models_1.ChatRoom.findOne({ where: { roomId: req.params.id } });
         if (!room) {
@@ -41,14 +40,13 @@ const enterRoom = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         }
         const io = req.app.get("io");
         const { rooms } = io.of("/chat").adapter;
-        if (room.max <= ((_c = rooms.get(req.params.id)) === null || _c === void 0 ? void 0 : _c.size)) {
+        if (room.max <= ((_b = rooms.get(req.params.id)) === null || _b === void 0 ? void 0 : _b.size)) {
             return res.send("full");
         }
         const chat = yield models_1.Chat.findAll({
             where: { ChatRoomRoomId: req.params.id },
             order: [["createdAt", "ASC"]],
         });
-        console.log("enterRoom컨트롤러에서 chat임", chat);
         res.send(chat);
         res.end();
     }

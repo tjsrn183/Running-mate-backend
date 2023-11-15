@@ -21,7 +21,6 @@ const getRunItem = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             where: { runItemId: req.params.runItemId },
             include: { model: chatRoom_1.default, attributes: ["roomId"] },
         });
-        console.log("getRunItem에 runItem", getRunItemfunc);
         res.json(getRunItemfunc);
         res.end();
     }
