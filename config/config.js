@@ -26,6 +26,7 @@ const config = {
         password: process.env.SEQUELIZE_PASSWORD || "",
         database: "database_production",
         host: "127.0.0.1",
+        port: 8001,
         dialect: dialect,
     },
 };
