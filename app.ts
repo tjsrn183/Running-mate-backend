@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import session from "express-session";
 import dotenv from "dotenv";
-
+dotenv.config();
 import { sequelize } from "./models";
 import passportConfig from "./passport";
 import passport from "passport";
@@ -21,8 +21,6 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
   res.status(err.status || 500);
 };
-
-dotenv.config();
 
 const app = express();
 passportConfig();

@@ -8,6 +8,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const express_session_1 = __importDefault(require("express-session"));
 const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const models_1 = require("./models");
 const passport_1 = __importDefault(require("./passport"));
 const passport_2 = __importDefault(require("passport"));
@@ -24,7 +25,6 @@ const errorHandler = (err, req, res, next) => {
     res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
     res.status(err.status || 500);
 };
-dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, passport_1.default)();
 app.set("port", process.env.PORT || 8000);
