@@ -27,7 +27,7 @@ const errorHandler = (err, req, res, next) => {
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, passport_1.default)();
-app.set("port", process.env.PORT || 8003);
+app.set("port", process.env.PORT || 8000);
 app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.static(path_1.default.join(__dirname + "/public")));
 app.use(express_1.default.json());

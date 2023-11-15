@@ -26,7 +26,7 @@ dotenv.config();
 
 const app = express();
 passportConfig();
-app.set("port", process.env.PORT || 8003);
+app.set("port", process.env.PORT || 8000);
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname + "/public")));
 app.use(express.json());
