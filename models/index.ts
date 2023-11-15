@@ -12,7 +12,7 @@ export const sequelize = new Sequelize.Sequelize(
   config.database,
   config.username,
   config.password,
-  config
+  { dialect: "mysql" }
 );
 
 User.initiate(sequelize);
