@@ -6,7 +6,7 @@ import ChatRoom from "./chatRoom";
 import Chat from "./chat";
 import configObj from "../config/config";
 const env = (process.env.NODE_ENV as "production" | "test") || "development";
-const config = configObj[env];
+const config: any = configObj[env];
 
 export const sequelize = new Sequelize.Sequelize(
   config.database,
