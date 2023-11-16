@@ -5,7 +5,7 @@ import Post from "./post";
 import Run from "./run";
 import ChatRoom from "./chatRoom";
 import Chat from "./chat";
-import { config } from "../config/config";
+import config from "../config/config";
 const env = (process.env.NODE_ENV as "production" | "test") || "development";
 const configSet: any = config[env];
 

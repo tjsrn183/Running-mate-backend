@@ -5,7 +5,7 @@ import { Dialect } from "sequelize";
 
 const dialect: Dialect = "mysql";
 
-export const config = {
+const config = {
   development: {
     username: "root",
     password: process.env.SEQUELIZE_PASSWORD || "",
@@ -29,3 +29,4 @@ export const config = {
     dialect: dialect,
   },
 };
+export = config;

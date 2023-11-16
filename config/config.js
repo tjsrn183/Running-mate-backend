@@ -2,12 +2,10 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.config = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const dialect = "mysql";
-exports.config = {
+const config = {
     development: {
         username: "root",
         password: process.env.SEQUELIZE_PASSWORD || "",
@@ -31,3 +29,4 @@ exports.config = {
         dialect: dialect,
     },
 };
+module.exports = config;
