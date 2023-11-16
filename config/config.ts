@@ -23,7 +23,7 @@ const config = {
   production: {
     username: "root",
     password: process.env.SEQUELIZE_PASSWORD || "",
-    database: "database_production",
+    database: "running_mate_production",
     host: "127.0.0.1",
     port: 8001,
     dialect: dialect,
