@@ -5,15 +5,15 @@ import Post from "./post";
 import Run from "./run";
 import ChatRoom from "./chatRoom";
 import Chat from "./chat";
-import configObj from "../config/config";
+import { config } from "../config/config";
 const env = (process.env.NODE_ENV as "production" | "test") || "development";
-const config: any = configObj[env];
+const configSet: any = config[env];
 
 export const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  { host: config.host, dialect: "mysql" }
+  configSet.database,
+  configSet.username,
+  configSet.password,
+  { host: configSet.host, dialect: "mysql" }
 );
 
 User.initiate(sequelize);
