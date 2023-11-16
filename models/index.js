@@ -19,7 +19,7 @@ exports.Chat = chat_1.default;
 const config_1 = __importDefault(require("../config/config"));
 const env = process.env.NODE_ENV || "development";
 const config = config_1.default[env];
-exports.sequelize = new sequelize_1.Sequelize(config.database, config.username, config.password, config);
+exports.sequelize = new sequelize_1.Sequelize(config.production.database, config.production.username, config.production.password, config.production);
 user_1.default.initiate(exports.sequelize);
 post_1.default.initiate(exports.sequelize);
 run_1.default.initiate(exports.sequelize);

@@ -10,10 +10,10 @@ const env = (process.env.NODE_ENV as "production" | "test") || "development";
 const config: any = configObj[env];
 
 export const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  config
+  config.production.database,
+  config.production.username,
+  config.production.password,
+  config.production
 );
 
 User.initiate(sequelize);
