@@ -1,4 +1,5 @@
-import Sequelize from "sequelize";
+//import Sequelize from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 import User from "./user";
 import Post from "./post";
 import Run from "./run";
@@ -8,7 +9,7 @@ import configObj from "../config/config";
 const env = (process.env.NODE_ENV as "production" | "test") || "development";
 const config: any = configObj[env];
 
-export const sequelize = new Sequelize.Sequelize(
+export const sequelize = new Sequelize(
   config.database,
   config.username,
   config.password,
