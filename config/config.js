@@ -30,4 +30,4 @@ const config = {
         dialect: dialect,
     },
 };
-exports.default = config;
+module.exports = config;
