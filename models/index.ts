@@ -1,5 +1,5 @@
-//import Sequelize from "sequelize";
-import { Sequelize } from "sequelize-typescript";
+import { Sequelize } from "sequelize";
+//import { Sequelize } from "sequelize-typescript";
 import User from "./user";
 import Post from "./post";
 import Run from "./run";
@@ -13,7 +13,7 @@ export const sequelize = new Sequelize(
   config.database,
   config.username,
   config.password,
-  { dialect: "mysql", host: config.host }
+  config
 );
 
 User.initiate(sequelize);
