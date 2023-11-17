@@ -55,10 +55,10 @@ sequelize
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/auth", authRouter);
-app.use("/post", postRouter);
-app.use("/run", runRouter);
-app.use("/chat", chatRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/post", postRouter);
+app.use("/api/run", runRouter);
+app.use("/api/chat", chatRouter);
 
 app.use((req, res, next) => {
   try {

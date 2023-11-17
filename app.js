@@ -54,10 +54,10 @@ models_1.sequelize
 });
 app.use(passport_2.default.initialize());
 app.use(passport_2.default.session());
-app.use("/auth", auth_1.default);
-app.use("/post", post_1.default);
-app.use("/run", run_1.default);
-app.use("/chat", chat_1.default);
+app.use("/api/auth", auth_1.default);
+app.use("/api/post", post_1.default);
+app.use("/api/run", run_1.default);
+app.use("/api/chat", chat_1.default);
 app.use((req, res, next) => {
     try {
         const error = new Error(`${req.method} ${req.url}라우터가 없습니다.`);
