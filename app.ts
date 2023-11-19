@@ -43,7 +43,12 @@ const sessionMiddleware = app.use(
   })
 );
 
-app.use(cors({ origin: "http://localhost:8080", credentials: true }));
+app.use(
+  cors({
+    origin: "https://app.netlify.com/sites/beamish-sundae-9ab162/overview",
+    credentials: true,
+  })
+);
 sequelize
   .sync({ force: false })
   .then(() => {
