@@ -45,7 +45,7 @@ const sessionMiddleware = app.use(
 
 app.use(
   cors({
-    origin: "https://app.netlify.com/sites/beamish-sundae-9ab162/overview",
+    origin: "https://running-mate.vercel.app/",
     credentials: true,
   })
 );

@@ -44,7 +44,7 @@ const sessionMiddleware = app.use((0, express_session_1.default)({
     proxy: true,
 }));
 app.use((0, cors_1.default)({
-    origin: "https://app.netlify.com/sites/beamish-sundae-9ab162/overview",
+    origin: "https://running-mate.vercel.app/",
     credentials: true,
 }));
 models_1.sequelize
