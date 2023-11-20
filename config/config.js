@@ -7,24 +7,24 @@ dotenv_1.default.config();
 const dialect = "mysql";
 const config = {
     development: {
-        username: "root",
+        username: process.env.DB_USERNAME || "root",
         password: process.env.SEQUELIZE_PASSWORD || "",
-        database: "running_mate",
-        host: "127.0.0.1",
+        database: process.env.DB_DATABASE || "running_mate",
+        host: process.env.DB_HOST || "127.0.0.1",
         dialect: dialect,
     },
     test: {
-        username: "root",
+        username: process.env.DB_USERNAME || "root",
         password: process.env.SEQUELIZE_PASSWORD || "",
-        database: "database_test",
-        host: "127.0.0.1",
+        database: process.env.DB_DATABASE || "database_test",
+        host: process.env.DB_HOST || "127.0.0.1",
         dialect: dialect,
     },
     production: {
-        username: "root",
+        username: process.env.DB_USERNAME || "root",
         password: process.env.SEQUELIZE_PASSWORD || "",
-        database: "running_mate_production",
-        host: "127.0.0.1",
+        database: process.env.DB_DATABASE || "running_mate_production",
+        host: process.env.DB_HOST || "127.0.0.1",
         dialect: dialect,
     },
 };

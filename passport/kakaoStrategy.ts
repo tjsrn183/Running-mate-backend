@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as KakaoStrategy } from "passport-kakao";
 import User from "../models/user";
+import exp from "constants";
 
 export default () => {
   passport.use(
