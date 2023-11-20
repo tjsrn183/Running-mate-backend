@@ -19,7 +19,11 @@ exports.Chat = chat_1.default;
 const config_1 = __importDefault(require("../config/config"));
 const env = process.env.NODE_ENV || "development";
 const configSet = config_1.default[env];
-exports.sequelize = new sequelize_1.Sequelize(configSet.database, configSet.username, configSet.password, { host: configSet.host, dialect: "mysql" });
+exports.sequelize = new sequelize_1.Sequelize(configSet.database, configSet.username, configSet.password, {
+    host: configSet.host,
+    dialect: "mysql",
+    port: Number(configSet.port),
+});
 user_1.default.initiate(exports.sequelize);
 post_1.default.initiate(exports.sequelize);
 run_1.default.initiate(exports.sequelize);

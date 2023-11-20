@@ -13,7 +13,11 @@ export const sequelize = new Sequelize(
   configSet.database,
   configSet.username,
   configSet.password,
-  { host: configSet.host, dialect: "mysql" }
+  {
+    host: configSet.host,
+    dialect: "mysql",
+    port: Number(configSet.port),
+  }
 );
 
 User.initiate(sequelize);
