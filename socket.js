@@ -15,7 +15,7 @@ const models_1 = require("./models");
 const socketFunc = (server, app) => {
     const io = new socket_io_1.Server(server, {
         cors: {
-            origin: "http://localhost:3000",
+            origin: "https://runningmate.shop",
             credentials: true,
             methods: ["GET", "POST"],
         },

@@ -6,7 +6,7 @@ import { Chat } from "./models";
 export const socketFunc = (server: http.Server, app: any) => {
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "https://runningmate.shop",
       credentials: true,
       methods: ["GET", "POST"],
     },
