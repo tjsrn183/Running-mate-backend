@@ -43,10 +43,7 @@ const sessionMiddleware = app.use((0, express_session_1.default)({
     },
     proxy: true,
 }));
-app.use((0, cors_1.default)({
-    origin: "https://running-mate.vercel.app/",
-    credentials: true,
-}));
+app.use((0, cors_1.default)());
 models_1.sequelize
     .sync({ force: false })
     .then(() => {

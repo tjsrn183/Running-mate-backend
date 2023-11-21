@@ -43,12 +43,8 @@ const sessionMiddleware = app.use(
   })
 );
 
-app.use(
-  cors({
-    origin: "https://running-mate.vercel.app/",
-    credentials: true,
-  })
-);
+app.use(cors());
+
 sequelize
   .sync({ force: false })
   .then(() => {
