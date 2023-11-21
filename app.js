@@ -43,7 +43,7 @@ const sessionMiddleware = app.use((0, express_session_1.default)({
     },
     proxy: true,
 }));
-app.use((0, cors_1.default)({ origin: "https://runningmate.shop/", credentials: true }));
+app.use((0, cors_1.default)({ origin: "https://runningmate.shop", credentials: true }));
 models_1.sequelize
     .sync({ force: false })
     .then(() => {
