@@ -16,7 +16,7 @@ router.get(
     failureRedirect: "/?loginError=카카오 로그인 실패",
   }),
   (req, res) => {
-    res.redirect("http://localhost:3000");
+    res.redirect("https://runningmate.shop");
   }
 );
 

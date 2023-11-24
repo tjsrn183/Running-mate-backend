@@ -16,7 +16,7 @@ router.get("/kakao", passport_1.default.authenticate("kakao"));
 router.get("/kakao/callback", passport_1.default.authenticate("kakao", {
     failureRedirect: "/?loginError=카카오 로그인 실패",
 }), (req, res) => {
-    res.redirect("http://localhost:3000");
+    res.redirect("https://runningmate.shop");
 });
 router.get("/userinfo", middlewares_1.isLoggedIn, auth_1.userInfo);
 router.post("/logout", middlewares_1.isLoggedIn, auth_1.logout);
