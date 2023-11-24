@@ -43,7 +43,19 @@ const sessionMiddleware = app.use(
   })
 );
 
-app.use(cors({ origin: "https://runningmate.shop", credentials: true }));
+const allowUrl = ["https://runningmate.shop", "https://www.runningmate.shop"];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowUrl.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 sequelize
   .sync({ force: false })
