@@ -18,7 +18,7 @@ const user_1 = __importDefault(require("../models/user"));
 exports.default = () => {
     passport_1.default.use(new passport_kakao_1.Strategy({
         clientID: process.env.KAKAO_ID,
-        callbackURL: "/auth/kakao/callback",
+        callbackURL: "/api/auth/kakao/callback",
     }, (accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         try {
