@@ -47,7 +47,7 @@ const getRunItemList = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             }
             return Object.assign(Object.assign({}, runItem.dataValues), { thumbnail: matches
                     ? matches[0]
-                    : "http://localhost:8000/uploads/defaultImg.jpg" });
+                    : "https://api.runningmate.shop/uploads/defaultImg.jpg" });
         });
         res.json({ ItemList, totalPage: Math.ceil(countItem / 10), countItem });
         res.end();

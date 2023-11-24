@@ -43,7 +43,7 @@ export const getRunItemList: RequestHandler = async (req, res, next) => {
 
         thumbnail: matches
           ? matches[0]
-          : "http://localhost:8000/uploads/defaultImg.jpg",
+          : "https://api.runningmate.shop/uploads/defaultImg.jpg",
       };
     });
 
