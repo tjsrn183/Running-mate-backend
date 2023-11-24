@@ -15,7 +15,7 @@ const imgUpload = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     var _a, _b;
     console.log("전달받은 파일", req.file);
     console.log("저장된 파일의 이름", (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename);
-    const IMG_URL = `http://localhost:8000/uploads/${(_b = req.file) === null || _b === void 0 ? void 0 : _b.filename}`;
+    const IMG_URL = `https://api.runningmate.shop/uploads/${(_b = req.file) === null || _b === void 0 ? void 0 : _b.filename}`;
     console.log(IMG_URL);
     res.json({ url: IMG_URL });
 });

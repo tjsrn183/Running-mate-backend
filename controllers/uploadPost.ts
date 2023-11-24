@@ -4,7 +4,7 @@ import { RequestHandler } from "express";
 export const imgUpload: RequestHandler = async (req, res, next) => {
   console.log("전달받은 파일", req.file);
   console.log("저장된 파일의 이름", req.file?.filename);
-  const IMG_URL = `http://localhost:8000/uploads/${req.file?.filename}`;
+  const IMG_URL = `https://api.runningmate.shop/uploads/${req.file?.filename}`;
   console.log(IMG_URL);
   res.json({ url: IMG_URL });
 };
