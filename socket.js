@@ -12,10 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.socketFunc = void 0;
 const socket_io_1 = require("socket.io");
 const models_1 = require("./models");
+const app_1 = require("./app");
 const socketFunc = (server, app) => {
     const io = new socket_io_1.Server(server, {
         cors: {
-            origin: "https://runningmate.shop",
+            origin: function (origin, callback) {
+                if (!origin || app_1.allowUrl.includes(origin)) {
+                    callback(null, true);
+                }
+                else {
+                    callback(new Error("Not allowed by CORS"));
+                }
+            },
             credentials: true,
             methods: ["GET", "POST"],
         },

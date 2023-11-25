@@ -2,11 +2,18 @@ import SocketIO, { Server } from "socket.io";
 import http from "http";
 
 import { Chat } from "./models";
+import { allowUrl } from "./app";
 
 export const socketFunc = (server: http.Server, app: any) => {
   const io = new Server(server, {
     cors: {
-      origin: "https://runningmate.shop",
+      origin: function (origin, callback) {
+        if (!origin || allowUrl.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
       credentials: true,
       methods: ["GET", "POST"],
     },

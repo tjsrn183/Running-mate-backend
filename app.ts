@@ -43,7 +43,10 @@ const sessionMiddleware = app.use(
   })
 );
 
-const allowUrl = ["https://runningmate.shop", "https://www.runningmate.shop"];
+export const allowUrl = [
+  "https://runningmate.shop",
+  "https://www.runningmate.shop",
+];
 app.use(
   cors({
     origin: function (origin, callback) {
